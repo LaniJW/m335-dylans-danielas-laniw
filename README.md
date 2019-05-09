@@ -74,6 +74,8 @@ Von dieser URL wird dann folgende Rueckgabe erwartet.
 
 ## Mockups
 
+Die folgenden Mockups stellen unser vorgesehenes Design dar.
+
 ### Portrait
 
 

@@ -2,17 +2,21 @@
 
 ## Zweck
 
-
+Ueber diese Applikation koennen diverse Comics von der xkcd Webseite eingesehen werden. Es kann auch nach Comics mit der ID und Schlagwoertern gesucht werden. Sobald ein Comic gefunden wurde, welches einem besonders gefaellt, kann man es favorisieren und somit speichern.
 
 ## API
 
 Wir haben uns fuer die XKCD API entschieden, da diese sehr simpel und ein guter Start ist, wenn wir uns mehr auf das Design der Applikation als die API konzentrieren wollen.
+
+Die [Dokumentation dieser API](https://xkcd.com/json.html) ist sehr simpel da nur 2 Endpunkte zur Verfuegung stehen.
 
 ### Neustes Comic - Endpoint
 
 Um das letzt veröffentlichte Comic zu erhalten, sendet man ein Request über folgende URL: https://xkcd.com/info.0.json.
 
 #### Rückgabe
+
+Von dieser URL wird dann folgende Rueckgabe erwartet.
 
 ```json
 {   
@@ -30,9 +34,11 @@ Um das letzt veröffentlichte Comic zu erhalten, sendet man ein Request über fo
 
 ### Comic nach ID - Endpoint
 
-Um ein Comic nach ID zu erhalten, sendet man ein Request über folgende URL, welche die ID beinhaltet: https://<span>xkcd.</span>com/\<int>/info.0.json.
+Um ein Comic nach ID zu erhalten, sendet man eine Abfrage über folgende URL, welche die ID beinhaltet: https://xkcd.com/{int}/info.0.json.
 
 #### Rückgabe
+
+Von dieser URL wird dann folgende Rueckgabe erwartet.
 
 ```json
 {
@@ -62,8 +68,6 @@ Um ein Comic nach ID zu erhalten, sendet man ein Request über folgende URL, wel
 | 08 | Einsehen der Favoriten | Die favorisierten Comics koennen unter den Favoriten eingesehen werden. | 0 | - App ist geoeffnet<br>- Der Favoriten-Tab ist offen |  | Alle favorisierten Comics werden angezeigt. |
 | 09 | Detailansicht eines Comics | Die Details, welche den Titel, das Transkript, den Alt Text und das Erscheinungsdatum angeben, koennen eingesehen werden. | 1 | - App ist geoeffnet | - Der Benutzer tippt auf ein Comic | Die Detailansicht mit allen Feldern wird angezeigt. |
 | 10 | Suche personalisieren | Es kann bestimmt werden, in welchen Feldern (`transcript`, `title` und `alt`) der Suchbegriff gesucht wird. | 3 | - App ist geoffnet | - Der Benutzer tippt auf den Pfeil links von der Suchleiste. | Es oeffnet sich ein Menue in dem er bestimmen kann in welchen Feldern der Comics er suchen will. |
-
-reload Startseite
 
 ### Prioritätenlegende
 

@@ -5,7 +5,11 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
 import android.view.MenuItem;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private TextView mTextMessage;
@@ -34,6 +38,18 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         mTextMessage = findViewById(R.id.message);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        // test data for card list view
+        List<Comic> comicList = new ArrayList<>();
+        for(int i = 1; i <= 12; i++){
+            Comic comic1 = new Comic("test" + i, "url");
+            comicList.add(comic1);
+        }
+
+        ListView listView = findViewById(R.id.home_listView);
+        listView.setAdapter(new ComicAdapter(this, comicList));
+
+
     }
 
 }

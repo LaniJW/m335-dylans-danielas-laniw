@@ -2,4 +2,8 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="card_margin">5dp</dimen>
+    <dimen name="listView_sidePadding">16dp</dimen>
+    <dimen name="listView_topPadding">26dp</dimen>
+    <dimen name="listView_itemSpacing">16dp</dimen>
 </resources>

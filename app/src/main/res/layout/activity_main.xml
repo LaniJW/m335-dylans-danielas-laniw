@@ -5,7 +5,19 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/pageBackgroundColor"
     tools:context=".MainActivity">
+
+    <ListView
+        android:id="@+id/home_listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/listView_sidePadding"
+        android:paddingRight="@dimen/listView_sidePadding"
+        android:paddingTop="@dimen/listView_topPadding"
+        android:paddingBottom="@dimen/listView_topPadding"
+        android:dividerHeight="@dimen/listView_itemSpacing"
+        android:divider="#00000000"/>
 
     <TextView
         android:id="@+id/message"

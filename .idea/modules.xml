@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/m335-dylans-danielas-laniw.iml" filepath="$PROJECT_DIR$/.idea/m335-dylans-danielas-laniw.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/m335-dylans-danielas-laniw.iml" filepath="$PROJECT_DIR$/m335-dylans-danielas-laniw.iml" />
     </modules>
   </component>
 </project>

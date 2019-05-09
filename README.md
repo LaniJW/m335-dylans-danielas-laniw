@@ -75,8 +75,8 @@ Die folgenden Paragrafen beschreiben die Arbeit, welche waehrend dem Projekt gel
 
 | Datum | Aktivitäten | Kommentar |
 |-------|--------------|-----------|
-| 8.5.2019 | - a<br>- b<br>- c | Lorem ipsum... |
-| 9.5.2019 | - a<br>- b<br>- c | Lorem ipsum... |
+| 8.5.2019 | - Brainstorming<br>- Präsentation angefangen<br> | Nachdem die Grundideen des Programms sowie Skizzen der verschiedenen Seiten definiert wurden, fing ich mit der Präsentation an. Momentant ist Zeit mein letztes Problem und die Projektarbeit geht gut voran. |
+| 9.5.2019 | - Dokumentation<br>- Präsentation<br>- c | Lorem ipsum... |
 | 10.5.2019 | - a<br>- b<br>- c | Lorem ipsum... |
 | 15.5.2019 | - a<br>- b<br>- c | Lorem ipsum... |
 | 16.5.2019 | - a<br>- b<br>- c | Lorem ipsum... |

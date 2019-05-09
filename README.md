@@ -78,19 +78,15 @@ Die folgenden Mockups stellen unser vorgesehenes Design dar.
 
 ### Portrait
 
-
-
-#### Flow
-
-
+![doc-img/portrait.PNG](doc-img/portrait.PNG)
 
 ### Landscape
 
+![doc-img/landscape.PNG](doc-img/landscape.PNG)
 
+### Flow
 
-#### Flow
-
-
+![doc-img/workflow.PNG](doc-img/workflow.jpeg)
 
 ## Tägliches Journal
 

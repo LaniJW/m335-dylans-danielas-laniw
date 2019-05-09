@@ -72,6 +72,24 @@ Von dieser URL wird dann folgende Rueckgabe erwartet.
 - 2 = optional
 - 3 = nett zum haben
 
+## Mockups
+
+### Portrait
+
+
+
+#### Flow
+
+
+
+### Landscape
+
+
+
+#### Flow
+
+
+
 ## Tägliches Journal
 
 Die folgenden Paragrafen beschreiben die Arbeit, welche waehrend dem Projekt geleistet wurde.

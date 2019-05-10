@@ -2,4 +2,8 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="searchBar_button_width">4dp</dimen>
+    <dimen name="searchBar_button_height">36dp</dimen>
+    <dimen name="searchBar_button_marginEnd">16dp</dimen>
+    <dimen name="searchBar_textField_width">265dp</dimen>
 </resources>

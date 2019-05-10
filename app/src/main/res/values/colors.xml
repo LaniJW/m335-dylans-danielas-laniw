@@ -5,4 +5,5 @@
     <color name="colorAccent">#D81B60</color>
     <color name="pageBackgroundColor">#333132</color>
     <color name="cardBackgroundColor">#f4f4f4</color>
+    <color name="dividerColor">#00000000</color>
 </resources>

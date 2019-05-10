@@ -1,5 +1,6 @@
 package com.example.bottom_nav_test;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private TextView mTextMessage;
+    private ListView mMainListView;
+    private Context context;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -21,10 +23,24 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+                    // test data for card list view in home
+                    List<Comic> homeComicList = new ArrayList<>();
+                    for(int i = 1; i <= 12; i++){
+                        Comic comic1 = new Comic("test_home" + i, "url");
+                        homeComicList.add(comic1);
+                    }
+                    mMainListView.setAdapter(new ComicAdapter(context, new ArrayList<Comic>()));
+                    mMainListView.setAdapter(new ComicAdapter(context, homeComicList));
                     return true;
-                case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_favorites);
+                case R.id.navigation_favorites:
+                    // test data for card list view in favorites
+                    List<Comic> favComicList = new ArrayList<>();
+                    for(int i = 1; i <= 12; i++){
+                        Comic comic1 = new Comic("test_fav" + i, "url");
+                        favComicList.add(comic1);
+                    }
+                    mMainListView.setAdapter(new ComicAdapter(context, new ArrayList<Comic>()));
+                    mMainListView.setAdapter(new ComicAdapter(context, favComicList));
                     return true;
             }
             return false;
@@ -36,20 +52,26 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
-        mTextMessage = findViewById(R.id.message);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        // test data for card list view
-        List<Comic> comicList = new ArrayList<>();
+        mMainListView = findViewById(R.id.main_listView);
+        context = this.getApplicationContext();
+
+        // test data for card list view in home
+        List<Comic> homeComicList = new ArrayList<>();
         for(int i = 1; i <= 12; i++){
-            Comic comic1 = new Comic("test" + i, "url");
-            comicList.add(comic1);
+            Comic comic1 = new Comic("test_home" + i, "url");
+            homeComicList.add(comic1);
         }
 
-        ListView listView = findViewById(R.id.home_listView);
-        listView.setAdapter(new ComicAdapter(this, comicList));
+        // test data for card list view in favorites
+        List<Comic> favComicList = new ArrayList<>();
+        for(int i = 1; i <= 12; i++){
+            Comic comic1 = new Comic("test_fav" + i, "url");
+            favComicList.add(comic1);
+        }
 
-
+        mMainListView.setAdapter(new ComicAdapter(this, homeComicList));
     }
 
 }

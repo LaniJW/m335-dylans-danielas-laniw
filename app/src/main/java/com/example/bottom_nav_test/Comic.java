@@ -2,6 +2,7 @@ package com.example.bottom_nav_test;
 
 public class Comic {
 
+    private int id;
     private String title;
     private String safe_title;
     private String url;
@@ -11,12 +12,17 @@ public class Comic {
     private int transcript;
     private int alt;
 
-    public Comic(String title, String url){
+    public Comic(int id, String title, String url){
+        this.id = id;
         this.title = title;
         this.url = url;
     }
 
     //(TODO) add constructor for detal view and getters/setters
+
+    public int getId() { return this.id; }
+
+    public void setId() { this.id = id; }
 
     public String getTitle(){
         return this.title;

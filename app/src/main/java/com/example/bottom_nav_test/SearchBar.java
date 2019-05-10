@@ -2,33 +2,33 @@ package com.example.bottom_nav_test;
 
 import android.support.v7.app.AppCompatActivity;
 
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SearchBar extends AppCompatActivity {
 
-    public void performSearch(ArrayList<Integer> list, EditText searchTextField, TextView text){
-
+    public List<Comic> performSearch(ArrayList<Comic> list, EditText searchTextField){
+        List<Comic> comicsForSearch = new ArrayList<>();
         String searchedID = searchTextField.getText().toString();
-        text.setText("No comic with ID \"" + searchedID + "\" found.");
 
         if(searchedID.equals("") || searchedID.equals("*")){
-            for(int ID : list){
-                text.setText("I would print everything out!");
+            for(Comic comic : list){
+                comicsForSearch.add(comic);
             }
         } else if(searchedID.matches("\\d")){
-            for(int ID : list) {
-                if (ID == Integer.valueOf(searchedID)) {
-                    text.setText(ID + " found");
+            for(Comic comic : list) {
+                if (comic.getId() == Integer.valueOf(searchedID)) {
+                    comicsForSearch.add(comic);
                 }
             }
         } else {
-            text.setText("Invalid input type.");
         }
 
-
+        return comicsForSearch;
     }
 
     public void openDropdown() {

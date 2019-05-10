@@ -17,10 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private TextView mTextMessage;
     private SearchBar searchBarClass;
     private EditText searchTextField;
-    ArrayList<Integer> comicID = new ArrayList<>();
+    ArrayList<Comic> comicID = new ArrayList<>();
     private ListView mMainListView;
     private Context context;
 
@@ -34,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
                     // test data for card list view in home
                     List<Comic> homeComicList = new ArrayList<>();
                     for(int i = 1; i <= 12; i++){
-                        Comic comic1 = new Comic("test_home" + i, "url");
+                        Comic comic1 = new Comic(i,"test_home" + i, "url");
                         homeComicList.add(comic1);
                     }
                     mMainListView.setAdapter(new ComicAdapter(context, new ArrayList<Comic>()));
@@ -44,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                     // test data for card list view in favorites
                     List<Comic> favComicList = new ArrayList<>();
                     for(int i = 1; i <= 12; i++){
-                        Comic comic1 = new Comic("test_fav" + i, "url");
+                        Comic comic1 = new Comic(i,"test_fav" + i, "url");
                         favComicList.add(comic1);
                     }
                     mMainListView.setAdapter(new ComicAdapter(context, new ArrayList<Comic>()));
@@ -60,13 +59,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mMainListView = findViewById(R.id.main_listView);
+        context = this.getApplicationContext();
+
         // Toolbar
-        comicID.add(6);
-        comicID.add(5);
-        comicID.add(4);
-        comicID.add(3);
-        comicID.add(2);
-        comicID.add(1);
+        for(int i = 1; i <= 6; i++){
+            comicID.add(new Comic(i, "searchtest" + i, "img_url" + i));
+        }
 
         Toolbar searchBar = findViewById(R.id.search_bar);
         setSupportActionBar(searchBar);
@@ -79,20 +78,17 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        mMainListView = findViewById(R.id.main_listView);
-        context = this.getApplicationContext();
-
         // test data for card list view in home
         List<Comic> homeComicList = new ArrayList<>();
         for(int i = 1; i <= 12; i++){
-            Comic comic1 = new Comic("test_home" + i, "url");
+            Comic comic1 = new Comic(i,"test_home" + i, "url");
             homeComicList.add(comic1);
         }
 
         // test data for card list view in favorites
         List<Comic> favComicList = new ArrayList<>();
         for(int i = 1; i <= 12; i++){
-            Comic comic1 = new Comic("test_fav" + i, "url");
+            Comic comic1 = new Comic(i,"test_fav" + i, "url");
             favComicList.add(comic1);
         }
 
@@ -104,8 +100,9 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View button1){
             searchBarClass = new SearchBar();
             searchTextField = findViewById(R.id.search_bar_text_field);
-            mTextMessage = findViewById(R.id.textView4);
-            searchBarClass.performSearch(comicID, searchTextField, mTextMessage);
+            mMainListView = findViewById(R.id.main_listView);
+            mMainListView.setAdapter(new ComicAdapter(context, searchBarClass.performSearch(
+                    comicID, searchTextField)));
         }
     };
 

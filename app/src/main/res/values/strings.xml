@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">bottom-nav-test</string>
+    <string name="app_name">XKCD Comic App</string>
     <string name="title_home">Home</string>
     <string name="title_favorites">Favorites</string>
+    <string name="searchBar_hint_text">Search</string>
 </resources>

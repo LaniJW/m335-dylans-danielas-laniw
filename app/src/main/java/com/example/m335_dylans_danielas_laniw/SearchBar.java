@@ -19,7 +19,7 @@ public class SearchBar extends AppCompatActivity {
             for(Comic comic : list){
                 comicsForSearch.add(comic);
             }
-        } else if(searchedID.matches("\\d+11")){
+        } else if(searchedID.matches("\\d+")){
             for(Comic comic : list) {
                 if (comic.getNum() == Integer.valueOf(searchedID)) {
                     comicsForSearch.add(comic);

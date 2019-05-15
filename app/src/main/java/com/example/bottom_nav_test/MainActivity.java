@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
                     // test data for card list view in home
                     List<Comic> homeComicList = new ArrayList<>();
                     for(int i = 1; i <= 12; i++){
-                        Comic comic1 = new Comic(i,"test_home" + i, "url");
+                        Comic comic1 = new Comic(1,"test_home" + i, "url");
                         homeComicList.add(comic1);
                     }
                     mMainListView.setAdapter(new ComicAdapter(context, new ArrayList<Comic>()));
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                     // test data for card list view in favorites
                     List<Comic> favComicList = new ArrayList<>();
                     for(int i = 1; i <= 12; i++){
-                        Comic comic1 = new Comic(i,"test_fav" + i, "url");
+                        Comic comic1 = new Comic(1,"test_fav" + i, "url");
                         favComicList.add(comic1);
                     }
                     mMainListView.setAdapter(new ComicAdapter(context, new ArrayList<Comic>()));

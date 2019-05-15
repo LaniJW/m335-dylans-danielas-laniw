@@ -5,7 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.bottom_nav_test.persistence.Comic;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -25,7 +29,7 @@ public class ComicAdapter extends ArrayAdapter<Comic> {
             convertView = layoutInflater.inflate(R.layout.comic_card, null);
             viewHolder = new ViewHolder();
             viewHolder.comicTitleTextView = convertView.findViewById(R.id.comicTitle);
-            viewHolder.comicImageUrlTextView = convertView.findViewById(R.id.imageUrl);
+            viewHolder.comicImageView = convertView.findViewById(R.id.imageView);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -33,15 +37,14 @@ public class ComicAdapter extends ArrayAdapter<Comic> {
 
         String name = getItem(position).getTitle();
         viewHolder.comicTitleTextView.setText(name);
-        String url = getItem(position).getUrl();
-        viewHolder.comicImageUrlTextView.setText(url);
+        Picasso.with(getContext()).load(getItem(position).getImg()).into(viewHolder.comicImageView);
 
         return convertView;
     }
 
     public static class ViewHolder{
         TextView comicTitleTextView;
-        TextView comicImageUrlTextView;
+        ImageView comicImageView;
     }
 
 }

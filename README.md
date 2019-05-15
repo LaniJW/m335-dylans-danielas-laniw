@@ -82,7 +82,7 @@ Die folgenden Mockups stellen unser vorgesehenes Design dar.
 
 ### Landscape
 
-![doc-img/landscape.PNG](doc-img/landscape.PNG)
+    ![doc-img/landscape.PNG](doc-img/landscape.PNG)
 
 ### Flow
 
@@ -118,9 +118,9 @@ Die folgenden Paragrafen beschreiben die Arbeit, welche waehrend dem Projekt gel
 | --------- | --------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 8.5.2019  | - App Design Diskussion<br>- Use Cases schreiben                      | Wir konnten heute noch nicht viel machen da uns nur eine halbe Stunde zur Verfuegung stand, aber ich denke, dass wir in den folgenden Tagen gut voran kommen werden. |
 | 9.5.2019  | - Grundstruktur der Dokumentation aufstellen<br>- Use Cases schreiben | Lorem ipsum...                                                                                                                                                       |
-| 10.5.2019 | - a<br>- b<br>- c                                                     | Lorem ipsum...                                                                                                                                                       |
-| 15.5.2019 | - a<br>- b<br>- c                                                     | Lorem ipsum...                                                                                                                                                       |
-| 16.5.2019 | - a<br>- b<br>- c                                                     | Lorem ipsum...                                                                                                                                                       |
+| 10.5.2019 | - Navigation zwischen Home und Favoriten implementieren<br>- API calls implementieren<br>- Homepage comics Anzeige implementieren<br> | Lorem ipsum... |
+| 15.5.2019 | - Persistierung implementieren | Lorem ipsum... |
+| 16.5.2019 | - a<br>- b<br>- c | Lorem ipsum... |
 
 ## Reflexion
 

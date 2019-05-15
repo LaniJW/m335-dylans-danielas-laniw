@@ -1,7 +1,6 @@
-package com.example.bottom_nav_test;
+package com.example.m335_dylans_danielas_laniw;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
@@ -10,27 +9,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
 
-import com.example.bottom_nav_test.persistence.AppDatabase;
-import com.example.bottom_nav_test.persistence.Comic;
-import com.example.bottom_nav_test.persistence.ComicDao;
+import com.example.m335_dylans_danielas_laniw.persistence.AppDatabase;
+import com.example.m335_dylans_danielas_laniw.persistence.Comic;
+import com.example.m335_dylans_danielas_laniw.persistence.ComicDao;
 import com.google.gson.Gson;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -150,33 +143,34 @@ public class MainActivity extends AppCompatActivity {
                 });
 
                 for (int i = 1; i <= (int) (highestId / 7); i += 1) {
-                    // Build request data for API
-                    Request request = new Request.Builder()
-                            .url("https://www.xkcd.com/" + i + "/info.0.json")
-                            .build();
+                    if (mComicDao.getByNum(i) == null){
+                        // Build request data for API
+                        Request request = new Request.Builder()
+                                .url("https://www.xkcd.com/" + i + "/info.0.json")
+                                .build();
 
-                    // Request data from API and work with it asynchronically
-                    OkHttpClient client = new OkHttpClient();
-                    Callback responseCallback = new Callback() {
-                        // Display toast if comics are unavailable.
-                        @Override
-                        public void onFailure(Call call, IOException e) {
-                            Log.e("OkHttp Fail", e.getMessage());
+                        // Request data from API and work with it asynchronically
+                        OkHttpClient client = new OkHttpClient();
+                        client.newCall(request).enqueue(new Callback() {
+                            // Display toast if comics are unavailable.
+                            @Override
+                            public void onFailure(Call call, IOException e) {
+                                Log.e("OkHttp Fail", e.getMessage());
 
-                            // Make the Spinner invisible
-                            mSpinner.setVisibility(View.INVISIBLE);
-                        }
+                                // Make the Spinner invisible
+                                mSpinner.setVisibility(View.INVISIBLE);
+                            }
 
-                        // Work with response
-                        @Override
-                        public void onResponse(Call call, final Response response) throws IOException {
-                            // Get data from API and save data in Comic object.
-                            final Comic comic = new Gson().fromJson(response.body().string(), Comic.class);
+                            // Work with response
+                            @Override
+                            public void onResponse(Call call, final Response response) throws IOException {
+                                // Get data from API and save data in Comic object.
+                                final Comic comic = new Gson().fromJson(response.body().string(), Comic.class);
 
-                            mComicDao.insert(new Comic(comic.getNum(), comic.getTitle(), comic.getSafe_title(), comic.getImg(), comic.getDay(), comic.getMonth(), comic.getYear(), comic.getTranscript(), comic.getAlt()));
-                        }
-                    };
-                    client.newCall(request).enqueue(responseCallback);
+                                mComicDao.insert(new Comic(comic.getNum(), comic.getTitle(), comic.getSafe_title(), comic.getImg(), comic.getDay(), comic.getMonth(), comic.getYear(), comic.getTranscript(), comic.getAlt()));
+                            }
+                        });
+                    }
                 }
             }
         };

@@ -1,12 +1,10 @@
-package com.example.bottom_nav_test;
+package com.example.m335_dylans_danielas_laniw;
 
 import android.support.v7.app.AppCompatActivity;
 
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.TextView;
 
-import com.example.bottom_nav_test.persistence.Comic;
+import com.example.m335_dylans_danielas_laniw.persistence.Comic;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +19,7 @@ public class SearchBar extends AppCompatActivity {
             for(Comic comic : list){
                 comicsForSearch.add(comic);
             }
-        } else if(searchedID.matches("\\d")){
+        } else if(searchedID.matches("\\d+11")){
             for(Comic comic : list) {
                 if (comic.getNum() == Integer.valueOf(searchedID)) {
                     comicsForSearch.add(comic);

@@ -1,4 +1,4 @@
-package com.example.bottom_nav_test.persistence;
+package com.example.m335_dylans_danielas_laniw.persistence;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
@@ -10,6 +10,9 @@ import java.util.List;
 public interface ComicDao {
     @Query("SELECT * FROM comic ORDER BY num ASC")
     List<Comic> getAll();
+
+    @Query("SELECT * FROM comic WHERE num = :num")
+    Comic getByNum(int num);
 
     @Query("DELETE FROM comic")
     void deleteAll();

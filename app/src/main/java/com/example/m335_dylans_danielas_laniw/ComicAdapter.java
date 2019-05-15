@@ -1,9 +1,6 @@
-package com.example.bottom_nav_test;
+package com.example.m335_dylans_danielas_laniw;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.bottom_nav_test.persistence.Comic;
+import com.example.m335_dylans_danielas_laniw.persistence.Comic;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

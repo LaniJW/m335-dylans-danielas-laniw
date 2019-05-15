@@ -1,4 +1,4 @@
-package com.example.bottom_nav_test.persistence;
+package com.example.m335_dylans_danielas_laniw.persistence;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;

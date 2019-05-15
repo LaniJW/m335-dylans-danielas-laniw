@@ -1,4 +1,4 @@
-package com.example.bottom_nav_test;
+package com.example.m335_dylans_danielas_laniw;
 
 import org.junit.Test;
 

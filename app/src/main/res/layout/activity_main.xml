@@ -40,7 +40,7 @@
         tools:visibility="invisible" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/reload_button"
         android:layout_width="wrap_content"
         android:layout_height="108dp"
         android:layout_gravity="bottom|end"

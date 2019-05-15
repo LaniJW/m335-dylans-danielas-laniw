@@ -3,6 +3,7 @@ package com.example.bottom_nav_test;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -35,18 +36,22 @@ public class MainActivity extends AppCompatActivity {
     private int highestId;
     private ArrayList homeComicList;
     private ComicDao mComicDao;
+    private FloatingActionButton reloadButton;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            reloadButton = findViewById(R.id.reload_button);
             switch (item.getItemId()) {
                 case R.id.navigation_home:
+                    reloadButton.show();
                     // Add home comics
                     loadHomeCards();
                     return true;
                 case R.id.navigation_favorites:
+                    reloadButton.hide();
                     loadFavCards();
                     mSpinner.setVisibility(View.INVISIBLE);
                     // test data for card list view in favorites
@@ -73,6 +78,9 @@ public class MainActivity extends AppCompatActivity {
         mSpinner = findViewById(R.id.progressBar);
         context = this.getApplicationContext();
         mComicDao = AppDatabase.getAppDb(getApplicationContext()).getComicDao();
+
+        reloadButton = findViewById(R.id.reload_button);
+        reloadButton.setOnClickListener(reload);
 
         loadAllComics();
         loadHomeCards();
@@ -268,4 +276,12 @@ public class MainActivity extends AppCompatActivity {
         // Empty ListView
         mMainListView.setAdapter(new ComicAdapter(context, comics));
     }
+
+    private View.OnClickListener reload = new View.OnClickListener(){
+        @Override
+        public void onClick(View button1){
+            loadHomeCards();
+        }
+    };
+
 }

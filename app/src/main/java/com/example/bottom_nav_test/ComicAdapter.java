@@ -1,6 +1,10 @@
 package com.example.bottom_nav_test;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,15 +35,26 @@ public class ComicAdapter extends ArrayAdapter<Comic> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        String name = getItem(position).getTitle();
+        final String name = getItem(position).getTitle();
         viewHolder.comicTitleTextView.setText(name);
         String url = getItem(position).getUrl();
         viewHolder.comicImageUrlTextView.setText(url);
 
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("ItemClickListener", name);
+            }
+        });
+
         return convertView;
     }
 
-    public static class ViewHolder{
+    public void openDetailView(String position) {
+
+    }
+
+    public static class ViewHolder {
         TextView comicTitleTextView;
         TextView comicImageUrlTextView;
     }

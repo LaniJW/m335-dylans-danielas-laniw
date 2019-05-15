@@ -1,10 +1,14 @@
 package com.example.bottom_nav_test;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,11 +23,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    private ConstraintLayout constraintLayout;
     private SearchBar searchBarClass;
     private EditText searchTextField;
     ArrayList<Comic> comicID = new ArrayList<>();
     private ListView mMainListView;
     private Context context;
+    private CardView cardView;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -69,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
             comicID.add(new Comic(i, "searchtest" + i, "img_url" + i));
         }
 
-        Toolbar searchBar = findViewById(R.id.search_bar);
+        final Toolbar searchBar = findViewById(R.id.search_bar);
         setSupportActionBar(searchBar);
         Button searchBarSearchButton = findViewById(R.id.search_bar_search_button);
         searchBarSearchButton.setOnClickListener(performSearch);
@@ -94,27 +100,7 @@ public class MainActivity extends AppCompatActivity {
             favComicList.add(comic1);
         }
 
-//        Comic[] comics = {
-//                new Comic(1, "one", "111"),
-//                new Comic(2, "two", "222"),
-//                new Comic(3, "three", "333"),
-//                new Comic(4, "four", "444"),
-//        };
-
-//        ArrayAdapter<Comic> adapter = new ArrayAdapter<>(this,
-//                android.R.layout.simple_list_item_1, comics);
-//
-//        mMainListView.setAdapter(adapter);
-//
-        mMainListView.setAdapter(new ComicAdapter(this, homeComicList));
-//
-//        mMainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//            }
-//        });
-//    }
+    }
 
     private View.OnClickListener performSearch = new View.OnClickListener() {
         @Override

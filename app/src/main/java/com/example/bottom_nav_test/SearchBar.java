@@ -6,12 +6,14 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.bottom_nav_test.persistence.Comic;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class SearchBar extends AppCompatActivity {
 
-    public List<Comic> performSearch(ArrayList<Comic> list, EditText searchTextField){
+    public List<Comic> performSearch(List<Comic> list, EditText searchTextField){
         List<Comic> comicsForSearch = new ArrayList<>();
         String searchedID = searchTextField.getText().toString();
 
@@ -21,7 +23,7 @@ public class SearchBar extends AppCompatActivity {
             }
         } else if(searchedID.matches("\\d")){
             for(Comic comic : list) {
-                if (comic.getId() == Integer.valueOf(searchedID)) {
+                if (comic.getNum() == Integer.valueOf(searchedID)) {
                     comicsForSearch.add(comic);
                 }
             }

@@ -30,6 +30,7 @@ import com.example.bottom_nav_test.persistence.ComicDao;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,34 +66,10 @@ public class MainActivity extends AppCompatActivity {
                     reloadButton.show();
                     // Add home comics
                     loadHomeCards();
-                    // test data for card list view in home
-                    List<Comic> homeComicList = new ArrayList<>();
-                    for(int i = 1; i <= 12; i++){
-                        Comic comic1 = new Comic(1,"test_home" + i, "url");
-                        homeComicList.add(comic1);
-                    }
-                    mMainListView.setAdapter(new ComicAdapter(context, new ArrayList<Comic>()));
-                    mMainListView.setAdapter(new ComicAdapter(context, homeComicList));
                     return true;
                 case R.id.navigation_favorites:
                     reloadButton.hide();
                     loadFavCards();
-                    mSpinner.setVisibility(View.INVISIBLE);
-                    // test data for card list view in favorites
-                    //List<Comic> favComicList = new ArrayList<>();
-                    //for(int i = 1; i <= 12; i++){
-                    //    Comic comic1 = new Comic(i, "test_title", "test_safe_title", "img_url_"+i, "day_"+i, "month_"+i, "year_"+i, "transcript_"+i, "alt_"+i);
-                    //    favComicList.add(comic1);
-                    //}
-                    //mMainListView.setAdapter(new ComicAdapter(context, new ArrayList<Comic>()));
-                    //mMainListView.setAdapter(new ComicAdapter(context, favComicList));
-                    List<Comic> favComicList = new ArrayList<>();
-                    for(int i = 1; i <= 12; i++){
-                        Comic comic1 = new Comic(1,"test_fav" + i, "url");
-                        favComicList.add(comic1);
-                    }
-                    mMainListView.setAdapter(new ComicAdapter(context, new ArrayList<Comic>()));
-                    mMainListView.setAdapter(new ComicAdapter(context, favComicList));
                     return true;
             }
             return false;
@@ -113,10 +90,6 @@ public class MainActivity extends AppCompatActivity {
 
         reloadButton = findViewById(R.id.reload_button);
         reloadButton.setOnClickListener(reload);
-        // Toolbar
-        for(int i = 1; i <= 6; i++){
-            comicID.add(new Comic(i, "searchtest" + i, "img_url" + i));
-        }
 
         final Toolbar searchBar = findViewById(R.id.search_bar);
         setSupportActionBar(searchBar);
@@ -125,28 +98,11 @@ public class MainActivity extends AppCompatActivity {
         Button searchBarDropDown = findViewById(R.id.search_bar_dropdown_button);
         searchBarDropDown.setOnClickListener(openDropdown);
 
-
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-        // test data for card list view in home
-        List<Comic> homeComicList = new ArrayList<>();
-        for(int i = 1; i <= 12; i++){
-            Comic comic1 = new Comic(i,"test_home" + i, "url");
-            homeComicList.add(comic1);
-        }
-
         loadAllComics();
         loadHomeCards();
     }
-        // test data for card list view in favorites
-        List<Comic> favComicList = new ArrayList<>();
-        for(int i = 1; i <= 12; i++){
-            Comic comic1 = new Comic(i,"test_fav" + i, "url");
-            favComicList.add(comic1);
-        }
 
-    void loadAllComics(){
+    void loadAllComics() {
         // Build request data for API
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
@@ -193,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-                for (int i = 1; i <= (int)(highestId/7); i+=1) {
+                for (int i = 1; i <= (int) (highestId / 7); i += 1) {
                     // Build request data for API
                     Request request = new Request.Builder()
                             .url("https://www.xkcd.com/" + i + "/info.0.json")
@@ -227,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
         client.newCall(request).enqueue(responseCallback);
     }
 
-    void loadHomeCards(){
+    void loadHomeCards() {
         // Display loading icon
         mSpinner.setVisibility(View.VISIBLE);
         // Empty ListView
@@ -276,11 +232,11 @@ public class MainActivity extends AppCompatActivity {
                 // Get random number of existing comics (yes, the comic with the id 404 doesn't exist)
                 int rand = 0;
                 while (rand == 0 || rand == 404)
-                    rand = (int)((Math.random()*highestId) + 1);
+                    rand = (int) ((Math.random() * highestId) + 1);
 
                 // Build request data for API
                 Request request = new Request.Builder()
-                        .url("https://www.xkcd.com/" + (int)((Math.random()*highestId) + 1) + "/info.0.json")
+                        .url("https://www.xkcd.com/" + (int) ((Math.random() * highestId) + 1) + "/info.0.json")
                         .build();
 
                 // Request data from API and work with it asynchronically
@@ -328,36 +284,39 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    void loadFavCards(){
+    void loadFavCards() {
         // Display loading icon
         mSpinner.setVisibility(View.VISIBLE);
         // Get all comics
         List<Comic> comics = mComicDao.getAll();
         // Empty ListView
         mMainListView.setAdapter(new ComicAdapter(context, comics));
+        // Remove loading icon
+        mSpinner.setVisibility(View.INVISIBLE);
     }
 
-    private View.OnClickListener reload = new View.OnClickListener(){
+    private View.OnClickListener reload = new View.OnClickListener() {
         @Override
-        public void onClick(View button1){
+        public void onClick(View button1) {
             loadHomeCards();
         }
     };
 
     private View.OnClickListener performSearch = new View.OnClickListener() {
         @Override
-        public void onClick(View button1){
+        public void onClick(View button1) {
             searchBarClass = new SearchBar();
             searchTextField = findViewById(R.id.search_bar_text_field);
             mMainListView = findViewById(R.id.main_listView);
+            List<Comic> comics = mComicDao.getAll();
             mMainListView.setAdapter(new ComicAdapter(context, searchBarClass.performSearch(
-                    comicID, searchTextField)));
+                    comics, searchTextField)));
         }
     };
 
     private View.OnClickListener openDropdown = new View.OnClickListener() {
         @Override
-        public void onClick(View button1){
+        public void onClick(View button1) {
             searchBarClass = new SearchBar();
             searchBarClass.openDropdown();
         }

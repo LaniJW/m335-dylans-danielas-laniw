@@ -66,4 +66,8 @@
 
     </android.support.v7.widget.Toolbar>
 
+    <include
+        android:id="@+id/include_filter_dialog"
+        layout="@layout/filter_dialog"/>
+
 </android.support.constraint.ConstraintLayout>

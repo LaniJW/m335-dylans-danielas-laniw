@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,8 +51,10 @@ public class MainActivity extends AppCompatActivity {
     private ComicDao mComicDao;
     private FloatingActionButton reloadButton;
     private CardView cardView;
-    FilterDialog filterDialog;
-    RadioGroup buttonGroup;
+    private FilterDialog filterDialog;
+    private RadioGroup buttonGroup;
+    private String filter;
+    ConstraintLayout cl;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -98,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
         searchBarSearchButton.setOnClickListener(performSearch);
         Button searchBarDropDown = findViewById(R.id.search_bar_dropdown_button);
         searchBarDropDown.setOnClickListener(openDropdown);
-
 
         loadAllComics();
         loadHomeCards();
@@ -312,8 +314,12 @@ public class MainActivity extends AppCompatActivity {
             searchTextField = findViewById(R.id.search_bar_text_field);
             mMainListView = findViewById(R.id.main_listView);
             List<Comic> comics = mComicDao.getAll();
+            filter = "radio_button_id";
+//            filter = "radio_button_title";
+//            filter = "radio_button_transcript";
+            TextView invalidText = findViewById(R.id.invalid_search_text);
             mMainListView.setAdapter(new ComicAdapter(context, searchBarClass.performSearch(
-                    comics, searchTextField)));
+                    comics, searchTextField, filter, invalidText)));
         }
     };
 
@@ -321,13 +327,17 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View button1) {
             Dialog filterDialog = new Dialog(MainActivity.this);
+//            cl = findViewById(R.layout.filter_dialog);
+//            cl.setVisibility(View.VISIBLE);
             filterDialog.setContentView(R.layout.filter_dialog);
+
 //            buttonGroup = findViewById(R.id.radio_group_filter);
+
             filterDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override
                 public void onDismiss(DialogInterface dialog) {
                     FilterDialog filterDialog = new FilterDialog();
-                    filterDialog.onClosed(buttonGroup);
+                    filter = filterDialog.onClosed(buttonGroup);
                 }
             });
 //            filterDialog.setOnDismissListener(dialogClosed);

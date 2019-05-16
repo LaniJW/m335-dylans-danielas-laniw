@@ -6,13 +6,16 @@ import android.widget.RadioGroup;
 
 public class FilterDialog {
 
-    public void onClosed(RadioGroup buttonGroup){
+    public String onClosed(RadioGroup buttonGroup){
         if(buttonGroup.getCheckedRadioButtonId() != -1){
 //            Log.e("CheckedRadioButton", String.valueOf(buttonGroup.getCheckedRadioButtonId()));
-            RadioButton radioButton = buttonGroup.findViewById(buttonGroup.getCheckedRadioButtonId());
+            RadioButton button = buttonGroup.findViewById(buttonGroup.getCheckedRadioButtonId());
+            button.setChecked(true);
+            return String.valueOf(button.getId());
         } else {
 //            Log.e("nothing checked", "ss");
         }
+        return "";
     }
 
 }

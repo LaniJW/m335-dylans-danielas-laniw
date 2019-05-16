@@ -2,7 +2,9 @@ package com.example.m335_dylans_danielas_laniw;
 
 import android.support.v7.app.AppCompatActivity;
 
+import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.m335_dylans_danielas_laniw.persistence.Comic;
 
@@ -11,28 +13,32 @@ import java.util.List;
 
 public class SearchBar extends AppCompatActivity {
 
-    public List<Comic> performSearch(List<Comic> list, EditText searchTextField){
+    public List<Comic> performSearch(List<Comic> list, EditText searchTextField, TextView invalidText) {
+        invalidText.setVisibility(View.INVISIBLE);
         List<Comic> comicsForSearch = new ArrayList<>();
-        String searchedID = searchTextField.getText().toString();
+        String searchedValue = searchTextField.getText().toString();
 
-        if(searchedID.equals("") || searchedID.equals("*")){
-            for(Comic comic : list){
+        if (searchedValue.equals("") || searchedValue.equals("*")) {
+            for (Comic comic : list) {
                 comicsForSearch.add(comic);
             }
-        } else if(searchedID.matches("\\d+")){
+        } else if(searchedValue.matches("[A-Za-z\\s]+")){
             for(Comic comic : list) {
-                if (comic.getNum() == Integer.valueOf(searchedID)) {
+                if(comic.getTitle().contains(searchedValue)){
+                    comicsForSearch.add(comic);
+                }
+            }
+        } else if(searchedValue.matches("\\d+")){
+            for(Comic comic : list) {
+                if (comic.getNum() == Integer.valueOf(searchedValue)) {
                     comicsForSearch.add(comic);
                 }
             }
         } else {
+            invalidText.setVisibility(View.VISIBLE);
         }
 
         return comicsForSearch;
-    }
-
-    public void openDropdown() {
-
     }
 
 }

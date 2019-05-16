@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Button;
 import android.widget.EditText;
@@ -88,8 +89,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(searchBar);
         Button searchBarSearchButton = findViewById(R.id.search_bar_search_button);
         searchBarSearchButton.setOnClickListener(performSearch);
-        Button searchBarDropDown = findViewById(R.id.search_bar_dropdown_button);
-        searchBarDropDown.setOnClickListener(openDropdown);
 
         loadAllComics();
         loadHomeCards();
@@ -286,16 +285,9 @@ public class MainActivity extends AppCompatActivity {
             searchTextField = findViewById(R.id.search_bar_text_field);
             mMainListView = findViewById(R.id.main_listView);
             List<Comic> comics = mComicDao.getAll();
+            TextView invalidText = findViewById(R.id.invalid_search_text);
             mMainListView.setAdapter(new ComicAdapter(context, searchBarClass.performSearch(
-                    comics, searchTextField)));
-        }
-    };
-
-    private View.OnClickListener openDropdown = new View.OnClickListener() {
-        @Override
-        public void onClick(View button1) {
-            searchBarClass = new SearchBar();
-            searchBarClass.openDropdown();
+                    comics, searchTextField, invalidText)));
         }
     };
 

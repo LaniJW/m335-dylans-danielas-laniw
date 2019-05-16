@@ -20,21 +20,29 @@ import java.util.List;
 public class ComicAdapter extends ArrayAdapter<Comic> {
 
     private LayoutInflater layoutInflater;
-private Context context;
-    public ComicAdapter(Context context, List<Comic> comics){
+    private Context context;
+
+    public ComicAdapter(Context context, List<Comic> comics) {
         super(context, R.layout.comic_card);
+        this.context = context;
         addAll(comics);
         this.context = context;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public View getView(final int position, View convertView, ViewGroup parent){
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
-        if(convertView == null){
+        if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.comic_card, null);
             viewHolder = new ViewHolder();
+            viewHolder.favoriteButton = convertView.findViewById(R.id.favorite_button);
             viewHolder.comicTitleTextView = convertView.findViewById(R.id.comicTitle);
             viewHolder.comicImageView = convertView.findViewById(R.id.imageView);
+            if (getItem(position).isFavorised()) {
+                viewHolder.favoriteButton.setBackgroundResource(R.drawable.ic_star_black_24dp);
+            } else {
+                viewHolder.favoriteButton.setBackgroundResource(R.drawable.ic_star_border_black_24dp);
+            }
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -50,20 +58,21 @@ private Context context;
                 Log.e("ItemClickListener", name);
             }
         });
-        viewHolder.favoriteButton = convertView.findViewById(R.id.favorite_button);
+
         viewHolder.favoriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ComicDao comicDao = AppDatabase.getAppDb(context.getApplicationContext()).getComicDao();
                 Comic comic = comicDao.getByNum(getItem(position).getNum());
-                if (comic.isFavorised()){
+                if (comic.isFavorised()) {
                     comicDao.updateFavorised(false, getItem(position).getNum());
-                }
-                else{
+                } else {
                     comicDao.updateFavorised(true, getItem(position).getNum());
                 }
+
             }
         });
+
         return convertView;
     }
 

@@ -1,6 +1,7 @@
 package com.example.m335_dylans_danielas_laniw;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.support.v7.widget.CardView;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -24,6 +26,7 @@ import com.example.m335_dylans_danielas_laniw.persistence.ComicDao;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -182,7 +185,13 @@ public class MainActivity extends AppCompatActivity {
         mSpinner.setVisibility(View.VISIBLE);
         // Empty ListView
         mMainListView.setAdapter(new ComicAdapter(context, new ArrayList<Comic>()));
+        mMainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.e("mMainListView.setOnItemClickListener", "testing item clicking");
 
+            }
+        });
         // Build request data for API
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()

@@ -32,11 +32,11 @@ public class ComicAdapter extends ArrayAdapter<Comic> {
             viewHolder = new ViewHolder();
             viewHolder.comicTitleTextView = convertView.findViewById(R.id.comicTitle);
             viewHolder.comicImageView = convertView.findViewById(R.id.imageView);
-            if(getItem(position).isFavorised()){
-                favoriteButton.setBackground("@drawable/ic_star_black_24dp");
-            } else {
-                favoriteButton.setBackground("@drawable/ic_star_border_black_24dp");
-            }
+//            if(getItem(position).isFavorised()){
+//                favoriteButton.setBackground("@drawable/ic_star_black_24dp");
+//            } else {
+//                favoriteButton.setBackground("@drawable/ic_star_border_black_24dp");
+//            }
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();

@@ -1,8 +1,6 @@
 package com.example.m335_dylans_danielas_laniw;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
@@ -15,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Button;
@@ -51,10 +48,6 @@ public class MainActivity extends AppCompatActivity {
     private ComicDao mComicDao;
     private FloatingActionButton reloadButton;
     private CardView cardView;
-    private FilterDialog filterDialog;
-    private RadioGroup buttonGroup;
-    private String filter;
-    ConstraintLayout cl;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -92,15 +85,10 @@ public class MainActivity extends AppCompatActivity {
         reloadButton = findViewById(R.id.reload_button);
         reloadButton.setOnClickListener(reload);
 
-
-        buttonGroup = findViewById(R.id.radio_group_filter);
-
         final Toolbar searchBar = findViewById(R.id.search_bar);
         setSupportActionBar(searchBar);
         Button searchBarSearchButton = findViewById(R.id.search_bar_search_button);
         searchBarSearchButton.setOnClickListener(performSearch);
-        Button searchBarDropDown = findViewById(R.id.search_bar_dropdown_button);
-        searchBarDropDown.setOnClickListener(openDropdown);
 
         loadAllComics();
         loadHomeCards();
@@ -314,46 +302,10 @@ public class MainActivity extends AppCompatActivity {
             searchTextField = findViewById(R.id.search_bar_text_field);
             mMainListView = findViewById(R.id.main_listView);
             List<Comic> comics = mComicDao.getAll();
-            filter = "radio_button_id";
-//            filter = "radio_button_title";
-//            filter = "radio_button_transcript";
             TextView invalidText = findViewById(R.id.invalid_search_text);
             mMainListView.setAdapter(new ComicAdapter(context, searchBarClass.performSearch(
-                    comics, searchTextField, filter, invalidText)));
+                    comics, searchTextField, invalidText)));
         }
     };
-
-    private View.OnClickListener openDropdown = new View.OnClickListener() {
-        @Override
-        public void onClick(View button1) {
-            Dialog filterDialog = new Dialog(MainActivity.this);
-//            cl = findViewById(R.layout.filter_dialog);
-//            cl.setVisibility(View.VISIBLE);
-            filterDialog.setContentView(R.layout.filter_dialog);
-
-//            buttonGroup = findViewById(R.id.radio_group_filter);
-
-            filterDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    FilterDialog filterDialog = new FilterDialog();
-                    filter = filterDialog.onClosed(buttonGroup);
-                }
-            });
-//            filterDialog.setOnDismissListener(dialogClosed);
-            searchBarClass = new SearchBar();
-            searchBarClass.openDropdown(filterDialog);
-        }
-    };
-
-//    private DialogInterface.OnDismissListener dialogClosed = new DialogInterface.OnDismissListener() {
-//        @Override
-//        public void onDismiss(DialogInterface dialog) {
-//            filterDialog = new FilterDialog();
-//            buttonGroup = findViewById(R.id.radio_group_filter);
-//
-//            filterDialog.onClosed(buttonGroup);
-//        }
-//    };
 
 }

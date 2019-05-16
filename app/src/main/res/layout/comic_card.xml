@@ -13,8 +13,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/card_margin"
         app:cardBackgroundColor="@color/cardBackgroundColor"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="5dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -29,7 +30,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
-                android:textSize="30sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/imageView"
                 app:layout_constraintEnd_toStartOf="@+id/favorite_button"
@@ -38,8 +39,8 @@
 
             <Button
                 android:id="@+id/favorite_button"
-                android:layout_width="49dp"
-                android:layout_height="44dp"
+                android:layout_width="32dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/ic_star_border_black_24dp"
@@ -56,8 +57,8 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
                 android:contentDescription="star icon"
+                android:scaleType="fitCenter"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

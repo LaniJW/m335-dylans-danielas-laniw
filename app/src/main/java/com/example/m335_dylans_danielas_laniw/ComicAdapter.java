@@ -19,7 +19,9 @@ import java.util.List;
 
 public class ComicAdapter extends ArrayAdapter<Comic> {
 
+    private final ComicDao comicDao;
     private LayoutInflater layoutInflater;
+    private ViewHolder viewHolder = new ViewHolder();
     private Context context;
 
     public ComicAdapter(Context context, List<Comic> comics) {
@@ -28,13 +30,14 @@ public class ComicAdapter extends ArrayAdapter<Comic> {
         addAll(comics);
         this.context = context;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        comicDao = AppDatabase.getAppDb(context.getApplicationContext()).getComicDao();
+
     }
 
     public View getView(final int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder;
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.comic_card, null);
-            viewHolder = new ViewHolder();
+
             viewHolder.favoriteButton = convertView.findViewById(R.id.favorite_button);
             viewHolder.comicTitleTextView = convertView.findViewById(R.id.comicTitle);
             viewHolder.comicImageView = convertView.findViewById(R.id.imageView);
@@ -52,26 +55,18 @@ public class ComicAdapter extends ArrayAdapter<Comic> {
         viewHolder.comicTitleTextView.setText(name);
         Picasso.with(getContext()).load(getItem(position).getImg()).into(viewHolder.comicImageView);
 
-        convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("ItemClickListener", name);
-            }
-        });
-
         viewHolder.favoriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ComicDao comicDao = AppDatabase.getAppDb(context.getApplicationContext()).getComicDao();
                 Comic comic = comicDao.getByNum(getItem(position).getNum());
                 if (comic.isFavorised()) {
                     comicDao.updateFavorised(false, getItem(position).getNum());
                 } else {
                     comicDao.updateFavorised(true, getItem(position).getNum());
                 }
-
             }
         });
+
 
         return convertView;
     }

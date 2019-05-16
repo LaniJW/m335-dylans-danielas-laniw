@@ -110,22 +110,9 @@ public class MainActivity extends AppCompatActivity {
 
                 highestId = comic.getNum();
 
-                // Run view-related code back on the main thread
-                MainActivity.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            comicList = new ArrayList<>(Collections.singletonList(comic));
-                        } catch (NullPointerException e) {
-                            logOkHttpFail(e);
-                        }
-                    }
-                });
-
                 for (int i = 1; i <= (int) (highestId / 7); i += 1) {
                     if (mComicDao.getByNum(i) == null) {
                         Request request = createRequest(i);
-
                         OkHttpClient client = new OkHttpClient();
                         client.newCall(request).enqueue(new Callback() {
                             @Override
@@ -150,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
         removeComics();
         comicList = new ArrayList();
 
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = OkHttpClientFactory.getOkHttpClient();
         Request request = createRequest();
 
         client.newCall(request).enqueue(new Callback() {
@@ -163,6 +150,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, final Response response) {
                 final Comic comic = parseComicFromResponse(response);
+                if (mComicDao.getByNum(comic.getNum()) == null)
+                    mComicDao.insert(comic);
                 highestId = comic.getNum();
 
                 // Run view-related code back on the main thread
@@ -181,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
                 int rand = getRandomNum(highestId);
                 Request request = createRequest(rand);
 
-                OkHttpClient client = new OkHttpClient();
+                OkHttpClient client = OkHttpClientFactory.getOkHttpClient();
                 client.newCall(request).enqueue(new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
@@ -192,6 +181,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call call, final Response response) throws IOException {
                         final Comic comic = parseComicFromResponse(response);
+                        if (mComicDao.getByNum(comic.getNum()) == null)
+                            mComicDao.insert(comic);
 
                         MainActivity.this.runOnUiThread(new Runnable() {
                             @Override

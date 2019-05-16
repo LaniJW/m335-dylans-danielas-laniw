@@ -23,9 +23,6 @@ public interface ComicDao {
     @Query("DELETE FROM comic")
     void deleteAll();
 
-    @Query("UPDATE comic SET favorised = :favorised WHERE num = :num")
-    void updateFavorised(boolean favorised, int num);
-
     @Insert
     void insertAll(List<Comic> Comic);
 

@@ -6,6 +6,7 @@
     <dimen name="searchBar_button_height">36dp</dimen>
     <dimen name="searchBar_button_marginEnd">16dp</dimen>
     <dimen name="searchBar_textField_width">265dp</dimen>
+    <dimen name="searchBar_height">56dp</dimen>
     <dimen name="card_margin">5dp</dimen>
     <dimen name="listView_sidePadding">16dp</dimen>
     <dimen name="listView_topPadding">26dp</dimen>

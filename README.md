@@ -132,6 +132,9 @@ Reflexion
 ---------
 
 ### Daniela Simões
+Der Einstieg in Android Studio verlief problemlos und ich konnte gut an meine ersten Aufgaben arbeiten. Da meine Emulatoren keine Internetverbindung aufbauen konnten musste ich meine Funktionen mit eigenen Testdaten testen und später, wo die API Calls funktionierten und die Testdaten rausgenommen wurden, bei jemand anderem. Die Kommunikation im Team empfand ich als gut und angenehm, sodass beim Planen immer alle involviert wurden und auf eine Lösung geeinigt werden konnte. 
+Der Dialog für die Suchfilter bereitete mir am meisten Schwierigkeit. Dieser löste ständig einen NullPointerException aus und kostete schlussendlich viel Zeit. Es wurde dann entschieden, den Dialog für die Suchfilter auszulassen da die Zeit knapp wurde und es noch wichtigere Sachen gab, die zu erledigen waren.
+Zu Schluss vollendete ich noch ein paar angefangene Funktionen, fügte neue kleine hinzu, welche ich rasch beenden konnte.
 
 ### Dylan Schmid
 

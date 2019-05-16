@@ -166,8 +166,8 @@ public class MainActivity extends AppCompatActivity {
                             public void onResponse(Call call, final Response response) throws IOException {
                                 // Get data from API and save data in Comic object.
                                 final Comic comic = new Gson().fromJson(response.body().string(), Comic.class);
-
-                                mComicDao.insert(new Comic(comic.getNum(), comic.getTitle(), comic.getSafe_title(), comic.getImg(), comic.getDay(), comic.getMonth(), comic.getYear(), comic.getTranscript(), comic.getAlt()));
+                                // Persist current comic
+                                mComicDao.insert(comic);
                             }
                         });
                     }
@@ -282,7 +282,7 @@ public class MainActivity extends AppCompatActivity {
         // Display loading icon
         mSpinner.setVisibility(View.VISIBLE);
         // Get all comics
-        List<Comic> comics = mComicDao.getAll();
+        List<Comic> comics = mComicDao.getFavorised();
         // Empty ListView
         mMainListView.setAdapter(new ComicAdapter(context, comics));
         // Remove loading icon

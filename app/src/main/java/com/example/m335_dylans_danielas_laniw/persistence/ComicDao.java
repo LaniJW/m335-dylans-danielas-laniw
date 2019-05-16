@@ -17,6 +17,9 @@ public interface ComicDao {
     @Query("SELECT * FROM comic WHERE favorised = 1 ORDER BY num ASC")
     List<Comic> getFavorised();
 
+    @Query("UPDATE comic SET favorised = :favorised WHERE num = :num")
+    void updateFavorised(boolean favorised, int num);
+
     @Query("DELETE FROM comic")
     void deleteAll();
 

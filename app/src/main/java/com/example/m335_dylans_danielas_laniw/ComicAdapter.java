@@ -6,10 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.m335_dylans_danielas_laniw.persistence.AppDatabase;
 import com.example.m335_dylans_danielas_laniw.persistence.Comic;
+import com.example.m335_dylans_danielas_laniw.persistence.ComicDao;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -17,14 +20,15 @@ import java.util.List;
 public class ComicAdapter extends ArrayAdapter<Comic> {
 
     private LayoutInflater layoutInflater;
-
+private Context context;
     public ComicAdapter(Context context, List<Comic> comics){
         super(context, R.layout.comic_card);
         addAll(comics);
+        this.context = context;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public View getView(int position, View convertView, ViewGroup parent){
+    public View getView(final int position, View convertView, ViewGroup parent){
         ViewHolder viewHolder;
         if(convertView == null){
             convertView = layoutInflater.inflate(R.layout.comic_card, null);
@@ -46,7 +50,20 @@ public class ComicAdapter extends ArrayAdapter<Comic> {
                 Log.e("ItemClickListener", name);
             }
         });
-
+        viewHolder.favoriteButton = convertView.findViewById(R.id.favorite_button);
+        viewHolder.favoriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ComicDao comicDao = AppDatabase.getAppDb(context.getApplicationContext()).getComicDao();
+                Comic comic = comicDao.getByNum(getItem(position).getNum());
+                if (comic.isFavorised()){
+                    comicDao.updateFavorised(false, getItem(position).getNum());
+                }
+                else{
+                    comicDao.updateFavorised(true, getItem(position).getNum());
+                }
+            }
+        });
         return convertView;
     }
 
@@ -57,6 +74,7 @@ public class ComicAdapter extends ArrayAdapter<Comic> {
     public static class ViewHolder {
         TextView comicTitleTextView;
         ImageView comicImageView;
+        Button favoriteButton;
     }
 
 }

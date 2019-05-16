@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,13 +25,18 @@ public class ComicAdapter extends ArrayAdapter<Comic> {
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public View getView(int position, View convertView, ViewGroup parent){
+    public View getView(final int position, View convertView, ViewGroup parent){
         ViewHolder viewHolder;
         if(convertView == null){
             convertView = layoutInflater.inflate(R.layout.comic_card, null);
             viewHolder = new ViewHolder();
             viewHolder.comicTitleTextView = convertView.findViewById(R.id.comicTitle);
             viewHolder.comicImageView = convertView.findViewById(R.id.imageView);
+            if(getItem(position).isFavorised()){
+                favoriteButton.setBackground("@drawable/ic_star_black_24dp");
+            } else {
+                favoriteButton.setBackground("@drawable/ic_star_border_black_24dp");
+            }
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();

@@ -25,6 +25,8 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import okhttp3.Call;
@@ -38,15 +40,13 @@ public class MainActivity extends AppCompatActivity {
     private ConstraintLayout constraintLayout;
     private SearchBar searchBarClass;
     private EditText searchTextField;
-    ArrayList<Comic> comicID = new ArrayList<>();
     private ListView mMainListView;
     private ProgressBar mSpinner;
     private Context context;
     private int highestId;
-    private ArrayList homeComicList;
     private ComicDao mComicDao;
     private FloatingActionButton reloadButton;
-    private CardView cardView;
+    private ArrayList comicList;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -96,30 +96,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void loadAllComics() {
-        // Build request data for API
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url("https://www.xkcd.com/info.0.json")
-                .build();
+        Request request = createRequest();
 
-        // Request data from API and work with it asynchronically
-        Callback responseCallback = new Callback() {
-            // Display toast if comics are unavailable.
+        client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                //Toast toast = Toast.makeText(getApplicationContext(), "Failed to get information for a random comic.", Toast.LENGTH_LONG);
-                //toast.show();
-
-                Log.e("OkHttp Fail", e.getMessage());
+                logOkHttpFail(e);
             }
 
-            // Work with response
             @Override
-            public void onResponse(Call call, final Response response) throws IOException {
-                // Get data from API and save data in Comic object.
-                final Comic comic = new Gson().fromJson(response.body().string(), Comic.class);
+            public void onResponse(Call call, final Response response) {
+                final Comic comic = parseComicFromResponse(response);
 
-                // Save id of last comic
                 highestId = comic.getNum();
 
                 // Run view-related code back on the main thread
@@ -127,83 +116,54 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         try {
-                            // Create and add one item to comic list
-                            homeComicList = new ArrayList<>();
-                            homeComicList.add(new Comic(comic.getNum(), "Newest: \"" + comic.getTitle() + "\"", comic.getSafe_title(), comic.getImg(), comic.getDay(), comic.getMonth(), comic.getYear(), comic.getTranscript(), comic.getAlt()));
-
-                            // Display comic
-                            mMainListView.setAdapter(new ComicAdapter(context, homeComicList));
+                            comicList = new ArrayList<>(Collections.singletonList(comic));
                         } catch (NullPointerException e) {
-                            // Display toast if NullPointerException occurs
-                            e.printStackTrace();
-                            Toast toast = Toast.makeText(getApplicationContext(), "Error occured while displaying newest comic information.", Toast.LENGTH_SHORT);
-                            toast.show();
+                            logOkHttpFail(e);
                         }
                     }
                 });
 
                 for (int i = 1; i <= (int) (highestId / 7); i += 1) {
-                    if (mComicDao.getByNum(i) == null){
-                        // Build request data for API
-                        Request request = new Request.Builder()
-                                .url("https://www.xkcd.com/" + i + "/info.0.json")
-                                .build();
+                    if (mComicDao.getByNum(i) == null) {
+                        Request request = createRequest(i);
 
-                        // Request data from API and work with it asynchronically
                         OkHttpClient client = new OkHttpClient();
                         client.newCall(request).enqueue(new Callback() {
-                            // Display toast if comics are unavailable.
                             @Override
                             public void onFailure(Call call, IOException e) {
-                                Log.e("OkHttp Fail", e.getMessage());
-
-                                // Make the Spinner invisible
-                                mSpinner.setVisibility(View.INVISIBLE);
+                                logOkHttpFail(e);
                             }
 
-                            // Work with response
                             @Override
-                            public void onResponse(Call call, final Response response) throws IOException {
-                                // Get data from API and save data in Comic object.
-                                final Comic comic = new Gson().fromJson(response.body().string(), Comic.class);
-                                // Persist current comic
+                            public void onResponse(Call call, final Response response) {
+                                final Comic comic = parseComicFromResponse(response);
                                 mComicDao.insert(comic);
                             }
                         });
                     }
                 }
             }
-        };
-        client.newCall(request).enqueue(responseCallback);
+        });
     }
 
     void loadHomeCards() {
-        // Display loading icon
-        mSpinner.setVisibility(View.VISIBLE);
-        // Empty ListView
-        mMainListView.setAdapter(new ComicAdapter(context, new ArrayList<Comic>()));
+        showSpinner();
+        removeComics();
+        comicList = new ArrayList();
 
-        // Build request data for API
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url("https://www.xkcd.com/info.0.json")
-                .build();
+        Request request = createRequest();
 
-        // Request data from API and work with it asynchronically
         client.newCall(request).enqueue(new Callback() {
-            // Display toast if comics are unavailable.
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.e("OkHttp Fail", e.getMessage());
+                logOkHttpFail(e);
+                hideSpinner();
             }
 
-            // Work with response
             @Override
-            public void onResponse(Call call, final Response response) throws IOException {
-                // Get data from API and save data in Comic object.
-                final Comic comic = new Gson().fromJson(response.body().string(), Comic.class);
-
-                // Save id of last comic
+            public void onResponse(Call call, final Response response) {
+                final Comic comic = parseComicFromResponse(response);
                 highestId = comic.getNum();
 
                 // Run view-related code back on the main thread
@@ -211,64 +171,39 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         try {
-                            // Create and add one item to comic list
-                            homeComicList = new ArrayList<>();
-                            homeComicList.add(new Comic(comic.getNum(), "Newest: \"" + comic.getTitle() + "\"", comic.getSafe_title(), comic.getImg(), comic.getDay(), comic.getMonth(), comic.getYear(), comic.getTranscript(), comic.getAlt()));
-
-                            // Display comic
-                            mMainListView.setAdapter(new ComicAdapter(context, homeComicList));
+                            comicList.add(comic);
                         } catch (NullPointerException e) {
-                            Log.e("OkHttp Fail", e.getMessage());
+                            logOkHttpFail(e);
+                            hideSpinner();
                         }
                     }
                 });
 
-                // Get random number of existing comics (yes, the comic with the id 404 doesn't exist)
-                int rand = 0;
-                while (rand == 0 || rand == 404)
-                    rand = (int) ((Math.random() * highestId) + 1);
+                int rand = getRandomNum(highestId);
+                Request request = createRequest(rand);
 
-                // Build request data for API
-                Request request = new Request.Builder()
-                        .url("https://www.xkcd.com/" + (int) ((Math.random() * highestId) + 1) + "/info.0.json")
-                        .build();
-
-                // Request data from API and work with it asynchronically
                 OkHttpClient client = new OkHttpClient();
                 client.newCall(request).enqueue(new Callback() {
-                    // Display toast if comics are unavailable.
                     @Override
                     public void onFailure(Call call, IOException e) {
-                        Log.e("OkHttp Fail", e.getMessage());
-
-                        // Make the Spinner invisible
-                        mSpinner.setVisibility(View.INVISIBLE);
+                        logOkHttpFail(e);
+                        hideSpinner();
                     }
 
-                    // Work with response
                     @Override
                     public void onResponse(Call call, final Response response) throws IOException {
-                        // Get data from API and save data in Comic object.
-                        final Comic comic = new Gson().fromJson(response.body().string(), Comic.class);
+                        final Comic comic = parseComicFromResponse(response);
 
-                        // Run view-related code back on the main thread
                         MainActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 try {
-                                    // Add one item to comic list
-                                    homeComicList.add(new Comic(comic.getNum(), "Random: \"" + comic.getTitle() + "\"", comic.getSafe_title(), comic.getImg(), comic.getDay(), comic.getMonth(), comic.getYear(), comic.getTranscript(), comic.getAlt()));
-
-                                    // Display comic
-                                    mMainListView.setAdapter(new ComicAdapter(context, homeComicList));
-
-                                    // Make the Spinner invisible
-                                    mSpinner.setVisibility(View.INVISIBLE);
+                                    comicList.add(comic);
+                                    displayComics();
+                                    hideSpinner();
                                 } catch (NullPointerException e) {
-                                    Log.e("OkHttp Fail", e.getMessage());
-
-                                    // Make the Spinner invisible
-                                    mSpinner.setVisibility(View.INVISIBLE);
+                                    logOkHttpFail(e);
+                                    hideSpinner();
                                 }
                             }
                         });
@@ -276,6 +211,54 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    int getRandomNum(int highestId) {
+        int rand = 0;
+        while (rand == 0 || rand == 404)
+            rand = (int) ((Math.random() * highestId) + 1);
+        return rand;
+    }
+
+    Request createRequest(int id) {
+        return new Request.Builder()
+                .url("https://www.xkcd.com/" + id + "/info.0.json")
+                .build();
+    }
+
+    Request createRequest() {
+        return new Request.Builder()
+                .url("https://www.xkcd.com/info.0.json")
+                .build();
+    }
+
+    void logOkHttpFail(Exception e) {
+        Log.e("OkHttp Fail", e.getMessage());
+    }
+
+    void showSpinner() {
+        mSpinner.setVisibility(View.VISIBLE);
+    }
+
+    void hideSpinner() {
+        mSpinner.setVisibility(View.INVISIBLE);
+    }
+
+    Comic parseComicFromResponse(Response r) {
+        try {
+            return new Gson().fromJson(r.body().string(), Comic.class);
+        } catch (IOException iOe) {
+            logOkHttpFail(iOe);
+            return null;
+        }
+    }
+
+    void removeComics() {
+        comicList = null;
+    }
+
+    void displayComics(){
+        mMainListView.setAdapter(new ComicAdapter(context, comicList));
     }
 
     void loadFavCards() {

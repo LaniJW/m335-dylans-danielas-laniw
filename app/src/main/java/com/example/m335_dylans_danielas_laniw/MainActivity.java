@@ -1,6 +1,8 @@
 package com.example.m335_dylans_danielas_laniw;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
@@ -13,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
     private ComicDao mComicDao;
     private FloatingActionButton reloadButton;
     private CardView cardView;
+    FilterDialog filterDialog;
+    RadioGroup buttonGroup;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -84,12 +89,16 @@ public class MainActivity extends AppCompatActivity {
         reloadButton = findViewById(R.id.reload_button);
         reloadButton.setOnClickListener(reload);
 
+
+        buttonGroup = findViewById(R.id.radio_group_filter);
+
         final Toolbar searchBar = findViewById(R.id.search_bar);
         setSupportActionBar(searchBar);
         Button searchBarSearchButton = findViewById(R.id.search_bar_search_button);
         searchBarSearchButton.setOnClickListener(performSearch);
         Button searchBarDropDown = findViewById(R.id.search_bar_dropdown_button);
         searchBarDropDown.setOnClickListener(openDropdown);
+
 
         loadAllComics();
         loadHomeCards();
@@ -143,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
                 });
 
                 for (int i = 1; i <= (int) (highestId / 7); i += 1) {
-                    if (mComicDao.getByNum(i) == null){
+                    if (mComicDao.getByNum(i) == null) {
                         // Build request data for API
                         Request request = new Request.Builder()
                                 .url("https://www.xkcd.com/" + i + "/info.0.json")
@@ -311,9 +320,30 @@ public class MainActivity extends AppCompatActivity {
     private View.OnClickListener openDropdown = new View.OnClickListener() {
         @Override
         public void onClick(View button1) {
+            Dialog filterDialog = new Dialog(MainActivity.this);
+            filterDialog.setContentView(R.layout.filter_dialog);
+//            buttonGroup = findViewById(R.id.radio_group_filter);
+            filterDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    FilterDialog filterDialog = new FilterDialog();
+                    filterDialog.onClosed(buttonGroup);
+                }
+            });
+//            filterDialog.setOnDismissListener(dialogClosed);
             searchBarClass = new SearchBar();
-            searchBarClass.openDropdown();
+            searchBarClass.openDropdown(filterDialog);
         }
     };
+
+//    private DialogInterface.OnDismissListener dialogClosed = new DialogInterface.OnDismissListener() {
+//        @Override
+//        public void onDismiss(DialogInterface dialog) {
+//            filterDialog = new FilterDialog();
+//            buttonGroup = findViewById(R.id.radio_group_filter);
+//
+//            filterDialog.onClosed(buttonGroup);
+//        }
+//    };
 
 }

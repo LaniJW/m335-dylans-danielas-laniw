@@ -6,6 +6,11 @@ import android.widget.RadioGroup;
 
 public class FilterDialog {
 
+    /**
+     *
+     * @param buttonGroup
+     * @return
+     */
     public String onClosed(RadioGroup buttonGroup){
         if(buttonGroup.getCheckedRadioButtonId() != -1){
 //            Log.e("CheckedRadioButton", String.valueOf(buttonGroup.getCheckedRadioButtonId()));

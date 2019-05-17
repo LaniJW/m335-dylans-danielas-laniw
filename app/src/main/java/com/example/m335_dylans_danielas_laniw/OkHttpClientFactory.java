@@ -5,6 +5,7 @@ import okhttp3.OkHttpClient;
 public class OkHttpClientFactory {
     private static OkHttpClient okHttpClient;
 
+    // Return the same OkHttpClient object to avoid using more than one, which would be redundant.
     public static OkHttpClient getOkHttpClient(){
         if (okHttpClient == null){
             okHttpClient = new OkHttpClient();

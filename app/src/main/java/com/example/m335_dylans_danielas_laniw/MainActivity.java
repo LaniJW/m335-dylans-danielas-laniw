@@ -10,7 +10,6 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -34,8 +33,6 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "Response";
-    private ConstraintLayout constraintLayout;
     private SearchBar searchBarClass;
     private EditText searchTextField;
     private ListView mMainListView;
@@ -46,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton reloadButton;
     private ArrayList comicList;
 
+    /**
+     * Handles the switching between the home and favorites page.
+     */
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -54,12 +54,16 @@ public class MainActivity extends AppCompatActivity {
             reloadButton = findViewById(R.id.reload_button);
             switch (item.getItemId()) {
                 case R.id.navigation_home:
+                    // Display the reload button for newest and random.
                     reloadButton.show();
+                    // Clear the search field
                     searchTextField.setText("");
                     loadHomeCards();
                     return true;
                 case R.id.navigation_favorites:
+                    // Hide the reload button for newest and random.
                     reloadButton.hide();
+                    // Clear the search field
                     searchTextField.setText("");
                     loadFavCards();
                     return true;
@@ -68,6 +72,10 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         context = this.getApplicationContext();
         mComicDao = AppDatabase.getAppDb(getApplicationContext()).getComicDao();
 
+        // Set reloadButton variable and add the OnClickListener
         reloadButton = findViewById(R.id.reload_button);
         reloadButton.setOnClickListener(reload);
 
@@ -89,14 +98,20 @@ public class MainActivity extends AppCompatActivity {
         searchBarSearchButton.setOnClickListener(performSearch);
         searchTextField = findViewById(R.id.search_bar_text_field);
 
+        // Load all of the comics to from the API
         loadAllComics();
+        // Load and display the newest and a random comic.
         loadHomeCards();
     }
 
+    /**
+     * Loads all comics from the XKCD API with the use of OkHttp and persists the data in the database for further queries.
+     */
     void loadAllComics() {
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = OkHttpClientFactory.getOkHttpClient();
         Request request = createRequest();
 
+        // Get API response from request.
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -107,12 +122,16 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call call, final Response response) {
                 final Comic comic = parseComicFromResponse(response);
 
+                // Save the id of the latest comic.
                 highestId = comic.getNum();
 
+                // Load every single (had to be cut down to a seventh of the total since the database wouldn't allow that many threads to access it.
                 for (int i = 1; i <= (int) (highestId / 7); i += 1) {
                     if (mComicDao.getByNum(i) == null) {
+                        // Load the comic into the database if it's not saved yet.
                         Request request = createRequest(i);
-                        OkHttpClient client = new OkHttpClient();
+                        OkHttpClient client = OkHttpClientFactory.getOkHttpClient();
+                        // Get API response from request.
                         client.newCall(request).enqueue(new Callback() {
                             @Override
                             public void onFailure(Call call, IOException e) {
@@ -121,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
 
                             @Override
                             public void onResponse(Call call, final Response response) {
+                                // Save the comic into the database.
                                 final Comic comic = parseComicFromResponse(response);
                                 mComicDao.insert(comic);
                             }
@@ -131,6 +151,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Displays the newest and random comic in the home tab, which are pulled from the API.
+     * If they're not already saved in the API they're persisted to avoid crashing the app when they're favorised or the detailview is opened.
+     */
     void loadHomeCards() {
         showSpinner();
         removeComics();
@@ -139,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
         OkHttpClient client = OkHttpClientFactory.getOkHttpClient();
         Request request = createRequest();
 
+        // Get API response from request.
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -150,8 +175,10 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call call, final Response response) {
                 final Comic comic = parseComicFromResponse(response);
                 if (mComicDao.getByNum(comic.getNum()) == null) {
+                    // Insert newest comic into database if it's not there yet.
                     mComicDao.insert(comic);
                 } else {
+                    // Load the correct icon if the newest comic is already in the database and favorised.
                     comic.setFavorised(mComicDao.getByNum(comic.getNum()).isFavorised());
                 }
                 highestId = comic.getNum();
@@ -161,6 +188,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         try {
+                            // Add newest comic to list to be displayed later.
                             comicList.add(comic);
                         } catch (NullPointerException e) {
                             logOkHttpFail(e);
@@ -172,6 +200,7 @@ public class MainActivity extends AppCompatActivity {
                 int rand = getRandomNum(highestId);
                 Request request = createRequest(rand);
 
+                // Get API response from request.
                 OkHttpClient client = OkHttpClientFactory.getOkHttpClient();
                 client.newCall(request).enqueue(new Callback() {
                     @Override
@@ -184,8 +213,10 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(Call call, final Response response) throws IOException {
                         final Comic comic = parseComicFromResponse(response);
                         if (mComicDao.getByNum(comic.getNum()) == null) {
+                            // Insert random comic into database if it's not there yet.
                             mComicDao.insert(comic);
                         } else {
+                            // Load the correct icon if the newest comic is already in the database and favorised.
                             comic.setFavorised(mComicDao.getByNum(comic.getNum()).isFavorised());
                         }
 
@@ -193,6 +224,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 try {
+                                    // Add the random comic to the comiclist, display the comic list and hide the spinner.
                                     comicList.add(comic);
                                     displayComics();
                                     hideSpinner();
@@ -208,6 +240,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Returns a random number between 1 and the highestId parameter.
+     * Additionally the random function doesn't return a random value that is equal to 404 since the call of the comic with the id 404 returns, well a 404 Not Found error.
+     * @param highestId
+     * @return
+     */
     int getRandomNum(int highestId) {
         int rand = 0;
         while (rand == 0 || rand == 404)
@@ -215,30 +253,54 @@ public class MainActivity extends AppCompatActivity {
         return rand;
     }
 
+    /**
+     * Returns the request with the id parameter.
+     * @param id
+     * @return
+     */
     Request createRequest(int id) {
         return new Request.Builder()
                 .url("https://www.xkcd.com/" + id + "/info.0.json")
                 .build();
     }
 
+    /**Returns the request for the newest comic.
+     *
+     * @return
+     */
     Request createRequest() {
         return new Request.Builder()
                 .url("https://www.xkcd.com/info.0.json")
                 .build();
     }
 
+    /**
+     * Logs a fail while requesting something over the API using OkHttp
+     * @param e
+     */
     void logOkHttpFail(Exception e) {
         Log.e("OkHttp Fail", e.getMessage());
     }
 
+    /**
+     * Makes the Spinner visible.
+     */
     void showSpinner() {
         mSpinner.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Makes the spinner disappear.
+     */
     void hideSpinner() {
         mSpinner.setVisibility(View.INVISIBLE);
     }
 
+    /**
+     * Parses the json string that got returned from the api call into a comic object and returns that.
+     * @param r
+     * @return
+     */
     Comic parseComicFromResponse(Response r) {
         try {
             return new Gson().fromJson(r.body().string(), Comic.class);
@@ -248,14 +310,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Removes all of the comics from the list that is used when displaying them.
+     */
     void removeComics() {
         comicList = null;
     }
 
+    /**
+     * Displays the comics on the page with the use of the parameter comicList.
+     */
     void displayComics() {
         mMainListView.setAdapter(new ComicAdapter(context, comicList));
     }
 
+    /**
+     * Displays all of the comics which are favorised from the database.
+     */
     void loadFavCards() {
         // Display loading icon
         mSpinner.setVisibility(View.VISIBLE);
@@ -267,6 +338,9 @@ public class MainActivity extends AppCompatActivity {
         mSpinner.setVisibility(View.INVISIBLE);
     }
 
+    /**
+     * OnClickListener for the home cards reload.
+     */
     private View.OnClickListener reload = new View.OnClickListener() {
         @Override
         public void onClick(View button1) {
@@ -274,6 +348,9 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * OnClickListener for the search icon to launch a search.
+     */
     private View.OnClickListener performSearch = new View.OnClickListener() {
         @Override
         public void onClick(View button1) {

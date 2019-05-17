@@ -12,6 +12,10 @@ import java.util.ArrayList;
 
 public class Description extends AppCompatActivity {
 
+    /**
+     * Display the data of the clicked comic in the detailview.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

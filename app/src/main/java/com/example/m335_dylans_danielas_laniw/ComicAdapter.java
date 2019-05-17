@@ -38,21 +38,22 @@ public class ComicAdapter extends ArrayAdapter<Comic> {
 
     public ComicAdapter(Context context, List<Comic> comics) {
         super(context, R.layout.comic_card);
+        // Saves the context for use in the getView method.
         this.context = context;
         addAll(comics);
-        this.context = context;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        // Gets a database instance to get data from the database.
         comicDao = AppDatabase.getAppDb(context.getApplicationContext()).getComicDao();
-
-        this.context = context;
     }
 
     public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.comic_card, null);
+            // Gets the comic card elements to manipulate them.
             viewHolder.favoriteButton = convertView.findViewById(R.id.favorite_button);
             viewHolder.comicTitleTextView = convertView.findViewById(R.id.comicTitle);
             viewHolder.comicImageView = convertView.findViewById(R.id.imageView);
+            // Displays the correct icon based on the value of favorised.
             if (getItem(position).isFavorised()) {
                 viewHolder.favoriteButton.setBackgroundResource(R.drawable.ic_star_black_24dp);
             } else {
@@ -63,6 +64,7 @@ public class ComicAdapter extends ArrayAdapter<Comic> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
+        // Save all of the data from the comic in a list for the detail view.
         final String title = getItem(position).getTitle();
         final String img = getItem(position).getImg();
         final String id = Integer.toString(getItem(position).getNum());
@@ -81,10 +83,12 @@ public class ComicAdapter extends ArrayAdapter<Comic> {
         fullComic.add(alt);
         fullComic.add(isFavorite);
 
+        // Add the title and image to the card.
         final String name = getItem(position).getTitle();
         viewHolder.comicTitleTextView.setText(name);
         Picasso.with(getContext()).load(getItem(position).getImg()).into(viewHolder.comicImageView);
 
+        // Creates the OnClickListener to open the detail view.
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,6 +101,7 @@ public class ComicAdapter extends ArrayAdapter<Comic> {
             }
         });
 
+        // Creates the OnClickListener to favorise the comic.
         viewHolder.favoriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

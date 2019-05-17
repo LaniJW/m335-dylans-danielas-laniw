@@ -54,13 +54,13 @@ public class SearchBar extends AppCompatActivity {
             }
         } else {
             // Informs the user that their search term is invalid.
-            invalidText.setText("Invalid input.\nPlease enter an id or keyword to search for.");
+            invalidText.setText(R.string.invalid_search);
             invalidText.setVisibility(View.VISIBLE);
         }
 
         if (comicsForSearch.size() == 0 && invalidText.getText().equals("")) {
             // Informs the user that their search didn't match any entries.
-            invalidText.setText("No entries found.");
+            invalidText.setText(R.string.no_entries_search);
             invalidText.setVisibility(View.VISIBLE);
         }
 

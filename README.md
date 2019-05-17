@@ -124,14 +124,16 @@ Die folgenden Paragrafen beschreiben die Arbeit, welche waehrend dem Projekt gel
 |-----------|-----------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | 8.5.2019  | - App Design Diskussion<br>- Use Cases schreiben                                                    | Wir konnten heute noch nicht viel machen da uns nur eine halbe Stunde zur Verfuegung stand, aber ich denke, dass wir in den folgenden Tagen gut voran kommen werden. |
 | 9.5.2019  | - Grundstruktur der Dokumentation aufstellen<br>- Use Cases schreiben<br>- Basisnavigation einbauen | Wir haben am Morgen viel zu viel Zeit damit vertan die Use Cases und Dokumentation zu schreiben und sind etwas weiter hinten als ich gehofft haette.                 |
-| 10.5.2019 | - a<br>- b<br>- c                                                                                   | Lorem ipsum...                                                                                                                                                       |
-| 15.5.2019 | - a<br>- b<br>- c                                                                                   | Lorem ipsum...                                                                                                                                                       |
-| 16.5.2019 | - a<br>- b<br>- c                                                                                   | Lorem ipsum...                                                                                                                                                       |
+| 10.5.2019 | - API calls definieren<br>- Aktionknopf einfuegen<br>- Anzeige des neuesten und zufaelligen Comics mit Bild implementieren | Heute konnte ich endlich etwas sichtbar praktisches implementieren. Ich schaffte es eben das neueste und zufaellige Comic anzuzeigen. |
+| 15.5.2019 | - Anzeige der Favoriten implementieren<br>- Persistierung aller Comics hinzufuegen | Nun werden beim Start der Applikation alle Comics reingeladen und die Comics welche als favorisiert abgespeichert sind, werden als solche im Favoriten Tag abgebildet. |
+| 16.5.2019 | - a<br>- b<br>- c | Lorem ipsum... |
+| 17.5.2019 | - | Lorem ipsum... |
 
 Reflexion
 ---------
 
 ### Daniela Simões
+
 Der Einstieg in Android Studio verlief problemlos und ich konnte gut an meine ersten Aufgaben arbeiten. Da meine Emulatoren keine Internetverbindung aufbauen konnten musste ich meine Funktionen mit eigenen Testdaten testen und später, wo die API Calls funktionierten und die Testdaten rausgenommen wurden, bei jemand anderem. Die Kommunikation im Team empfand ich als gut und angenehm, sodass beim Planen immer alle involviert wurden und auf eine Lösung geeinigt werden konnte. 
 Der Dialog für die Suchfilter bereitete mir am meisten Schwierigkeit. Dieser löste ständig einen NullPointerException aus und kostete schlussendlich viel Zeit. Es wurde dann entschieden, den Dialog für die Suchfilter auszulassen da die Zeit knapp wurde und es noch wichtigere Sachen gab, die zu erledigen waren.
 Zu Schluss vollendete ich noch ein paar angefangene Funktionen, fügte neue kleine hinzu, welche ich rasch beenden konnte.

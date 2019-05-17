@@ -112,11 +112,11 @@ Die folgenden Paragrafen beschreiben die Arbeit, welche waehrend dem Projekt gel
 
 | Datum     | Aktivitäten       | Kommentar      |
 |-----------|-------------------|----------------|
-| 8.5.2019  | - a<br>- b<br>- c | Lorem ipsum... |
-| 9.5.2019  | - a<br>- b<br>- c | Lorem ipsum... |
-| 10.5.2019 | - a<br>- b<br>- c | Lorem ipsum... |
-| 15.5.2019 | - a<br>- b<br>- c | Lorem ipsum... |
-| 16.5.2019 | - a<br>- b<br>- c | Lorem ipsum... |
+| 8.5.2019  | - Mockup und App besprochen<br>- b<br>- c | Wir besprachen im Team die Einzelheiten für unsere App. |
+| 9.5.2019  | - Workflow erstellt<br>- letzt Mockupänderungen<br>- OnItemClickListener für ListView<br> | Mockups fertiggestellt und mit dem OnItemClickListener begonnen, damit wir die DetailView öffnen können. |
+| 10.5.2019 | - OnItemClickListener<br> | Mit vielen Versuchen den OnItemClickListener schlussendlich zum funktionieren gebracht. |
+| 15.5.2019 | - DetailView Intent<br>- DetailView layout <br> | Den Intent denn wir der DetailActivity mitgeben musste als StringArrayList übergeben werden. Dafür musste ich das Comic zu Strings umwandeln und diese einer ArrayList hinzufügen. |
+| 16.5.2019 | - Layout fertiggestellt<br>- Intent ausgepackt und in Layout übergeben<br>- c | Projekt grösstenteils fertiggestellt. Der Intent musste ausgepackt und in die richtigen Views übergeben werden. Zu Schluss passte ich die Darstellung im GUI noch an. |
 
 ### Lani Wagner
 

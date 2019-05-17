@@ -149,8 +149,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, final Response response) {
                 final Comic comic = parseComicFromResponse(response);
-                if (mComicDao.getByNum(comic.getNum()) == null)
+                if (mComicDao.getByNum(comic.getNum()) == null) {
                     mComicDao.insert(comic);
+                } else {
+                    comic.setFavorised(mComicDao.getByNum(comic.getNum()).isFavorised());
+                }
                 highestId = comic.getNum();
 
                 // Run view-related code back on the main thread
@@ -246,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
         comicList = null;
     }
 
-    void displayComics(){
+    void displayComics() {
         mMainListView.setAdapter(new ComicAdapter(context, comicList));
     }
 

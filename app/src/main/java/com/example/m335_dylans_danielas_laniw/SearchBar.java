@@ -24,7 +24,12 @@ public class SearchBar extends AppCompatActivity {
             }
         } else if (searchedValue.matches("[A-Za-z\\s]+")) {
             for (Comic comic : list) {
-                if (comic.getTitle().contains(searchedValue) || comic.getAlt().contains(searchedValue) || comic.getTranscript().contains(searchedValue)) {
+                if (
+                        comic.getTitle().toLowerCase().contains(searchedValue.toLowerCase()) ||
+                        comic.getAlt().toLowerCase().contains(searchedValue.toLowerCase()) ||
+                        comic.getTranscript().toLowerCase().contains(searchedValue.toLowerCase())
+                )
+                {
                     comicsForSearch.add(comic);
                 }
             }

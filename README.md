@@ -94,43 +94,49 @@ Die folgenden Paragrafen beschreiben die Arbeit, welche waehrend dem Projekt gel
 
 ### Daniela Simões
 
-| Datum     | Aktivitäten                                      | Kommentar                                                                                                                                                                                                     |
-| --------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Datum | Aktivitäten | Kommentar |
+|-----------|--------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | 8.5.2019  | - Brainstorming<br>- Präsentation angefangen<br> | Nachdem die Grundideen des Programms sowie Skizzen der verschiedenen Seiten definiert wurden, fing ich mit der Präsentation an. Momentant ist Zeit mein letztes Problem und die Projektarbeit geht gut voran. |
-| 9.5.2019  | - Dokumentation<br>- Präsentation<br>- c         | Lorem ipsum...                                                                                                                                                                                                |
-| 10.5.2019 | - a<br>- b<br>- c                                | Lorem ipsum...                                                                                                                                                                                                |
-| 15.5.2019 | - a<br>- b<br>- c                                | Lorem ipsum...                                                                                                                                                                                                |
-| 16.5.2019 | - a<br>- b<br>- c                                | Lorem ipsum...                                                                                                                                                                                                |
+| 9.5.2019  | - Dokumentation<br>- Präsentation<br>- Template für ListView cards | Der schwierigste Teil der ListView ist, die Cards dynamisch zu listen, aber da uns ein Beispielprojekt zur Verfügung gestellt wurde, kann ich mich nach dem orientieren. |
+| 10.5.2019 | - Template für ListView cards<br>- Searchbar<br>- Search Funktion | Da ich mit Testdaten arbeiten musste, konnte ich die Templates für die Card Elemente noch nicht sicher erstellen, aber das erstellen der Cards und diese in die ListView zu listen vollendete ich schnell und problemlos. |
+| 15.5.2019 | - Fixed ImageView in cards<br>- OnClickListener für card Elemente<br>- OnClickListener für reload Knopf<br>- Filter Dialog für Search| Für den OnClickListener bei den Cards war es etwas schwierig diesen richtig zu implementieren, sodass er auch funktioniert. Mit etwas hilfe habe ich es dann auch geschafft und konnte die Cards und Reload etwas verbessern und am Suchfilter Dialog anfangen. |
+| 16.5.2019 | - Filter Dialog für Search<br>- Cards vollenden<br>- Favorite Funktion | Der Dialog für die Suchfilter dauerte ziemlich lange zu implementieren da immer von irgendwo ein NullPointerException aufgerufen wurde. Schlussendlich entschieden wir uns diese Funktion für's erste zu Vernachlässigen wegen der Zeit. |
 
 ### Dylan Schmid
 
 | Datum     | Aktivitäten       | Kommentar      |
-| --------- | ----------------- | -------------- |
-| 8.5.2019  | - a<br>- b<br>- c | Lorem ipsum... |
-| 9.5.2019  | - a<br>- b<br>- c | Lorem ipsum... |
-| 10.5.2019 | - a<br>- b<br>- c | Lorem ipsum... |
-| 15.5.2019 | - a<br>- b<br>- c | Lorem ipsum... |
-| 16.5.2019 | - a<br>- b<br>- c | Lorem ipsum... |
+|-----------|-------------------|----------------|
+| 8.5.2019  | - Mockup und App besprochen<br>- b<br>- c | Wir besprachen im Team die Einzelheiten für unsere App. |
+| 9.5.2019  | - Workflow erstellt<br>- letzt Mockupänderungen<br>- OnItemClickListener für ListView<br> | Mockups fertiggestellt und mit dem OnItemClickListener begonnen, damit wir die DetailView öffnen können. |
+| 10.5.2019 | - OnItemClickListener<br> | Mit vielen Versuchen den OnItemClickListener schlussendlich zum funktionieren gebracht. |
+| 15.5.2019 | - DetailView Intent<br>- DetailView layout <br> | Den Intent denn wir der DetailActivity mitgeben musste als StringArrayList übergeben werden. Dafür musste ich das Comic zu Strings umwandeln und diese einer ArrayList hinzufügen. |
+| 16.5.2019 | - Layout fertiggestellt<br>- Intent ausgepackt und in Layout übergeben<br>- c | Projekt grösstenteils fertiggestellt. Der Intent musste ausgepackt und in die richtigen Views übergeben werden. Zu Schluss passte ich die Darstellung im GUI noch an. |
 
 ### Lani Wagner
 
-| Datum     | Aktivitäten                                                           | Kommentar                                                                                                                                                            |
-| --------- | --------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 8.5.2019  | - App Design Diskussion<br>- Use Cases schreiben                      | Wir konnten heute noch nicht viel machen da uns nur eine halbe Stunde zur Verfuegung stand, aber ich denke, dass wir in den folgenden Tagen gut voran kommen werden. |
-| 9.5.2019  | - Grundstruktur der Dokumentation aufstellen<br>- Use Cases schreiben | Lorem ipsum...                                                                                                                                                       |
-| 10.5.2019 | - Navigation zwischen Home und Favoriten implementieren<br>- API calls implementieren<br>- Homepage comics Anzeige implementieren<br> | Lorem ipsum... |
-| 15.5.2019 | - Persistierung implementieren<br> - Branches durcheinander aufloesen | Lorem ipsum... |
-| 16.5.2019 | - Unittests schreiben<br>- UI verbessern<br>- Presentation vorbereiten | Lorem ipsum... |
+| Datum | Aktivitäten | Kommentar |
+|-------|-------------|-----------|
+| 8.5.2019  | - App Design Diskussion<br>- Use Cases schreiben | Wir konnten heute noch nicht viel machen da uns nur eine halbe Stunde zur Verfuegung stand, aber ich denke, dass wir in den folgenden Tagen gut voran kommen werden. |
+| 9.5.2019  | - Grundstruktur der Dokumentation aufstellen<br>- Use Cases schreiben<br>- Basisnavigation einbauen | Wir haben am Morgen viel zu viel Zeit damit vertan die Use Cases und Dokumentation zu schreiben und sind etwas weiter hinten als ich gehofft haette.                 |
+| 10.5.2019 | - API calls definieren<br>- Aktionknopf einfuegen<br>- Anzeige des neuesten und zufaelligen Comics mit Bild implementieren | Heute konnte ich endlich etwas sichtbar praktisches implementieren. Ich schaffte es eben das neueste und zufaellige Comic anzuzeigen. |
+| 15.5.2019 | - Anzeige der Favoriten implementieren<br>- Persistierung aller Comics hinzufuegen | Nun werden beim Start der Applikation alle Comics reingeladen und die Comics welche als favorisiert abgespeichert sind, werden als solche im Favoriten Tag abgebildet. |
+| 16.5.2019 | - Merge aller losen Branches<br>- Korrektur aller Fehler beim Merge | Da morgen der Abgabetermin ist, mussten wir heute alle wichtigen Funktionen abschliessen. Wir schafften es noch die Suche mit Schlagwoertern und die Detailansicht zum implementieren. |
+| 17.5.2019 | - Diverse kleine Details ausarbeiten<br>- Reflexion schreiben<br>- Release pushen | Heute ging es an den letzten Feinschliff. Wir mussten die Detailansicht in den Hauptteil einfuegen und die dadurch entstandenen Fehler reparieren. Sonst mussten wir noch die Dokumentation fertigstellen und mit dem fertigen Code einen Release pushen. |
 
 ## Reflexion
 
 ### Daniela Simões
 
-
+Der Einstieg in Android Studio verlief problemlos und ich konnte gut an meine ersten Aufgaben arbeiten. Da meine Emulatoren keine Internetverbindung aufbauen konnten musste ich meine Funktionen mit eigenen Testdaten testen und später, wo die API Calls funktionierten und die Testdaten rausgenommen wurden, bei jemand anderem. Die Kommunikation im Team empfand ich als gut und angenehm, sodass beim Planen immer alle involviert wurden und auf eine Lösung geeinigt werden konnte. 
+Der Dialog für die Suchfilter bereitete mir am meisten Schwierigkeit. Dieser löste ständig einen NullPointerException aus und kostete schlussendlich viel Zeit. Es wurde dann entschieden, den Dialog für die Suchfilter auszulassen da die Zeit knapp wurde und es noch wichtigere Sachen gab, die zu erledigen waren.
+Zu Schluss vollendete ich noch ein paar angefangene Funktionen, fügte neue kleine hinzu, welche ich rasch beenden konnte.
 
 ### Dylan Schmid
 
-
+Für mich war der üK zum Teil Wiederholung, vorallem bei der Theorie gab es ein paar Themen die ich schon kannte. Es war jedoch trotzdem gut einen Refresher zu haben. Android Studio war mir auch schon bekannt, ich hatte bei den Vorbereitungen aber probleme mit dem Git Repo. Der OnItemClickListener bereitete mir ein paar Verständnissprobleme und hinderte mich daran so bald wie möglich mit der DetailView weiter zu machen.
+Der Intent war eindeutig einfacher als der ClickListener, nur wie man die Daten im Intent mitgibt war unverständlich. Im Layout für die DetailView konnte ich alle Daten darstellen, auch das Image das mit Picasso geholt werden musste, nur die Möglichkeit das Comic zu favorisieren musste ich aus Zeitgründen weg lassen.
+Im Ganzen verlief die Arbeit gut, auch als Team hat es gut funktioniert.
 
 ### Lani Wagner
 
+Der Einstieg in Android ging ziemlich gut und es klappte am Anfang alles. Die ersten par Aufgaben waren nicht schwer umzusetzen. Zu Beginn machten wir guten Fortschritt aber nach zwei Tagen merkte ich, dass wir in bisschen hinterherhinkten was schlussendlich einen negativen Einfluss auf die Darstellung nahm. Ansonsten bin ich aber mit dem Resultat zufrieden, da wir die wichtigsten Funktionalitaeten implementieren konnten. Die App hat am Schluss fast alle erwuenschten Funktionalitaeten aber der Feinschliff konnte nicht zu voller Zufriedenheit ausgefuehrt werden.

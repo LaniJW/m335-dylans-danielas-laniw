@@ -224,6 +224,7 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         try {
                             // Add newest comic to list to be displayed later.
+                            comic.setTitle("Newest: \"" + comic.getTitle() + "\"");
                             comicList.add(comic);
                         } catch (NullPointerException e) {
                             logOkHttpFail(e);
@@ -271,6 +272,8 @@ public class MainActivity extends AppCompatActivity {
                             public void run() {
                                 try {
                                     // Add the random comic to the comiclist, display the comic list and hide the spinner.
+                                    comic.setTitle("Random" +
+                                            ": \"" + comic.getTitle() + "\"");
                                     comicList.add(comic);
                                     displayComics();
                                     hideSpinner();

@@ -139,5 +139,8 @@ Der Dialog für die Suchfilter bereitete mir am meisten Schwierigkeit. Dieser l�
 Zu Schluss vollendete ich noch ein paar angefangene Funktionen, fügte neue kleine hinzu, welche ich rasch beenden konnte.
 
 ### Dylan Schmid
+Für mich war der üK zum Teil Wiederholung, vorallem bei der Theorie gab es ein paar Themen die ich schon kannte. Es war jedoch trotzdem gut einen Refresher zu haben. Android Studio war mir auch schon bekannt, ich hatte bei den Vorbereitungen aber probleme mit dem Git Repo. Der OnItemClickListener bereitete mir ein paar Verständnissprobleme und hinderte mich daran so bald wie möglich mit der DetailView weiter zu machen.
+Der Intent war eindeutig einfacher als der ClickListener, nur wie man die Daten im Intent mitgibt war unverständlich. Im Layout für die DetailView konnte ich alle Daten darstellen, auch das Image das mit Picasso geholt werden musste, nur die Möglichkeit das Comic zu favorisieren musste ich aus Zeitgründen weg lassen.
+Im Ganzen verlief die Arbeit gut, auch als Team hat es gut funktioniert.
 
 ### Lani Wagner

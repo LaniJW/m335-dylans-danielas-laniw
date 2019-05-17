@@ -27,6 +27,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+/**
+ * Adapter class which loads the comics and its
+ * attributes into the list view
+ *
+ * @author Daniela Simões, Lani Wagner, Dylan Schmid
+ */
 public class ComicAdapter extends ArrayAdapter<Comic> {
 
     private ComicDao comicDao;
@@ -36,6 +42,11 @@ public class ComicAdapter extends ArrayAdapter<Comic> {
     private ViewHolder viewHolder = new ViewHolder();
     public static final String INTENT_KEY_DETAIL = "TEXT_TO_TEST_FUNCTIONALITY";
 
+    /**
+     *
+     * @param context
+     * @param comics list with comics
+     */
     public ComicAdapter(Context context, List<Comic> comics) {
         super(context, R.layout.comic_card);
         // Saves the context for use in the getView method.
@@ -46,6 +57,13 @@ public class ComicAdapter extends ArrayAdapter<Comic> {
         comicDao = AppDatabase.getAppDb(context.getApplicationContext()).getComicDao();
     }
 
+    /**
+     *
+     * @param position current position in list
+     * @param convertView
+     * @param parent
+     * @return
+     */
     public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.comic_card, null);
@@ -74,6 +92,7 @@ public class ComicAdapter extends ArrayAdapter<Comic> {
         final String alt = getItem(position).getAlt();
         final String isFavorite = Boolean.toString(getItem(position).isFavorised());
         final ArrayList<String> fullComic = new ArrayList<>();
+        //Add Strings to comic ArrayList
         fullComic.add(title);
         fullComic.add(id);
         fullComic.add(img);
@@ -92,6 +111,8 @@ public class ComicAdapter extends ArrayAdapter<Comic> {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //create Intent and Bundle
+                //Start Description class with intent
                 Intent intent = new Intent(getContext(), Description.class);
                 Bundle bundle = new Bundle();
                 bundle.putStringArrayList(INTENT_KEY_DETAIL, fullComic);
@@ -118,6 +139,10 @@ public class ComicAdapter extends ArrayAdapter<Comic> {
         return convertView;
     }
 
+
+    /**
+     * elements for a cardview
+     */
     public static class ViewHolder {
         TextView comicTitleTextView;
         ImageView comicImageView;

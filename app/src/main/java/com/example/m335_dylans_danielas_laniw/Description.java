@@ -21,9 +21,11 @@ public class Description extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_description);
 
+        //unpack intent
         Bundle intentBundle = getIntent().getExtras();
         ArrayList<String> listing = intentBundle.getStringArrayList(ComicAdapter.INTENT_KEY_DETAIL);
 
+        //get Strings from ArrayList and set Views
         String titel = listing.get(0);
         TextView comicTitel = findViewById(R.id.comicTitle);
         comicTitel.setText(titel);
@@ -32,10 +34,12 @@ public class Description extends AppCompatActivity {
         TextView comicId = findViewById(R.id.idComic);
         comicId.setText(id);
 
+        //load image with picasso and set ImageView
         String url = listing.get(2);
         ImageView comicImg = findViewById(R.id.imgComic);
         Picasso.with(this).load(url).into(comicImg);
 
+        //combine Strings for full date
         String day = listing.get(3);
         String month = listing.get(4);
         String year = listing.get(5);

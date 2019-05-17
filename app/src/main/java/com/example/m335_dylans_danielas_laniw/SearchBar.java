@@ -11,6 +11,11 @@ import com.example.m335_dylans_danielas_laniw.persistence.Comic;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Functions of search bar
+ *
+ * @author Daniela Simões
+ */
 public class SearchBar extends AppCompatActivity {
 
     /**
@@ -23,6 +28,7 @@ public class SearchBar extends AppCompatActivity {
     public List<Comic> performSearch(List<Comic> list, EditText searchTextField, TextView invalidText) {
         invalidText.setVisibility(View.INVISIBLE);
         List<Comic> comicsForSearch = new ArrayList<>();
+        //gets the user input
         String searchedValue = searchTextField.getText().toString();
 
         if (searchedValue.matches("\\*?")) {
@@ -33,12 +39,9 @@ public class SearchBar extends AppCompatActivity {
         } else if (searchedValue.matches("[A-Za-z\\s]+")) {
             // Gets all of the comics, which contain the search term in either the title, alt or transcript if the entry consists of letters and spaces.
             for (Comic comic : list) {
-                if (
-                        comic.getTitle().toLowerCase().contains(searchedValue.toLowerCase()) ||
+                if (    comic.getTitle().toLowerCase().contains(searchedValue.toLowerCase()) ||
                         comic.getAlt().toLowerCase().contains(searchedValue.toLowerCase()) ||
-                        comic.getTranscript().toLowerCase().contains(searchedValue.toLowerCase())
-                )
-                {
+                        comic.getTranscript().toLowerCase().contains(searchedValue.toLowerCase()) ) {
                     comicsForSearch.add(comic);
                 }
             }
@@ -61,6 +64,7 @@ public class SearchBar extends AppCompatActivity {
             invalidText.setVisibility(View.VISIBLE);
         }
 
+        //returns list with all comics found with the search
         return comicsForSearch;
     }
 

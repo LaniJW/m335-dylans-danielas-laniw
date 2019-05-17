@@ -10,4 +10,6 @@
     <color name="pageBackgroundColor">#333232</color>
     <color name="cardBackgroundColor">#FFFFFF</color>
     <color name="dividerColor">#00000000</color>
+    <color name="black">#000</color>
+    <color name="white">#FFF</color>
 </resources>

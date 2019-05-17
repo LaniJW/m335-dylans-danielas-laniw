@@ -6,5 +6,5 @@
     <string name="title_activity_dependency">Dependency</string>
     <string name="title_ID">ID:</string>
     <string name="title_Date">Date:</string>
-    <string name="title_Transcript">Transcript:</string>
+    <string name="title_Transcript">Alt:</string>
 </resources>

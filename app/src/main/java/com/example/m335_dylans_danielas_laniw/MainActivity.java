@@ -1,7 +1,6 @@
 package com.example.m335_dylans_danielas_laniw;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
@@ -9,14 +8,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.support.v7.widget.CardView;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
+import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.Button;
 import android.widget.EditText;
 import android.support.v7.widget.Toolbar;
@@ -27,10 +24,7 @@ import com.example.m335_dylans_danielas_laniw.persistence.ComicDao;
 import com.google.gson.Gson;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import okhttp3.Call;
@@ -61,11 +55,12 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     reloadButton.show();
-                    // Add home comics
+                    searchTextField.setText("");
                     loadHomeCards();
                     return true;
                 case R.id.navigation_favorites:
                     reloadButton.hide();
+                    searchTextField.setText("");
                     loadFavCards();
                     return true;
             }
@@ -92,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(searchBar);
         Button searchBarSearchButton = findViewById(R.id.search_bar_search_button);
         searchBarSearchButton.setOnClickListener(performSearch);
+        searchTextField = findViewById(R.id.search_bar_text_field);
 
         loadAllComics();
         loadHomeCards();
@@ -276,7 +272,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View button1) {
             searchBarClass = new SearchBar();
-            searchTextField = findViewById(R.id.search_bar_text_field);
             mMainListView = findViewById(R.id.main_listView);
             List<Comic> comics = mComicDao.getAll();
             TextView invalidText = findViewById(R.id.invalid_search_text);

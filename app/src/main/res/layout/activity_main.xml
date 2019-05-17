@@ -75,7 +75,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:gravity="center_horizontal"
-        android:text="Invalid input type."
+        android:textColor="@color/white"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -18,23 +18,29 @@ public class SearchBar extends AppCompatActivity {
         List<Comic> comicsForSearch = new ArrayList<>();
         String searchedValue = searchTextField.getText().toString();
 
-        if (searchedValue.equals("") || searchedValue.equals("*")) {
+        if (searchedValue.matches("\\*?")) {
             for (Comic comic : list) {
                 comicsForSearch.add(comic);
             }
-        } else if(searchedValue.matches("[A-Za-z\\s]+")){
-            for(Comic comic : list) {
-                if(comic.getTitle().contains(searchedValue) || comic.getAlt().contains(searchedValue) || comic.getTranscript().contains(searchedValue)){
+        } else if (searchedValue.matches("[A-Za-z\\s]+")) {
+            for (Comic comic : list) {
+                if (comic.getTitle().contains(searchedValue) || comic.getAlt().contains(searchedValue) || comic.getTranscript().contains(searchedValue)) {
                     comicsForSearch.add(comic);
                 }
             }
-        } else if(searchedValue.matches("\\d+")){
-            for(Comic comic : list) {
+        } else if (searchedValue.matches("\\d+")) {
+            for (Comic comic : list) {
                 if (comic.getNum() == Integer.valueOf(searchedValue)) {
                     comicsForSearch.add(comic);
                 }
             }
         } else {
+            invalidText.setText("Invalid input.\nPlease enter an id or keyword to search for.");
+            invalidText.setVisibility(View.VISIBLE);
+        }
+
+        if (comicsForSearch.size() == 0 && invalidText.getText().equals("")) {
+            invalidText.setText("No entries found.");
             invalidText.setVisibility(View.VISIBLE);
         }
 

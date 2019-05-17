@@ -21,7 +21,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
             <TextView
                 android:id="@+id/comicTitle"
                 android:layout_width="0dp"
@@ -32,6 +31,8 @@
                 android:layout_marginBottom="8dp"
                 android:textSize="14sp"
                 android:textStyle="bold"
+                android:textColor="@color/black"
+                android:background="@color/white"
                 app:layout_constraintBottom_toTopOf="@+id/imageView"
                 app:layout_constraintEnd_toStartOf="@+id/favorite_button"
                 app:layout_constraintStart_toStartOf="parent"

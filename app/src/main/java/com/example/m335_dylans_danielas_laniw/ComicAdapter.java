@@ -3,6 +3,7 @@ package com.example.m335_dylans_danielas_laniw;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,10 +29,11 @@ import java.util.ListIterator;
 
 public class ComicAdapter extends ArrayAdapter<Comic> {
 
-    private final ComicDao comicDao;
+    private ComicDao comicDao;
     private LayoutInflater layoutInflater;
     private ComicDao mComicDao;
     private Context context;
+    private ViewHolder viewHolder = new ViewHolder();
     public static final String INTENT_KEY_DETAIL = "TEXT_TO_TEST_FUNCTIONALITY";
 
     public ComicAdapter(Context context, List<Comic> comics) {
@@ -45,10 +47,9 @@ public class ComicAdapter extends ArrayAdapter<Comic> {
         this.context = context;
     }
 
-    public View getView(final int position, View convertView, ViewGroup parent){
-        if(convertView == null){
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.comic_card, null);
-
             viewHolder.favoriteButton = convertView.findViewById(R.id.favorite_button);
             viewHolder.comicTitleTextView = convertView.findViewById(R.id.comicTitle);
             viewHolder.comicImageView = convertView.findViewById(R.id.imageView);
@@ -68,7 +69,7 @@ public class ComicAdapter extends ArrayAdapter<Comic> {
         final String day = getItem(position).getDay();
         final String month = getItem(position).getMonth();
         final String year = getItem(position).getYear();
-        final String transcript = getItem(position).getTranscript();
+        final String alt = getItem(position).getAlt();
         final String isFavorite = Boolean.toString(getItem(position).isFavorised());
         final ArrayList<String> fullComic = new ArrayList<>();
         fullComic.add(title);
@@ -77,23 +78,28 @@ public class ComicAdapter extends ArrayAdapter<Comic> {
         fullComic.add(day);
         fullComic.add(month);
         fullComic.add(year);
-        fullComic.add(transcript);
+        fullComic.add(alt);
         fullComic.add(isFavorite);
 
+        final String name = getItem(position).getTitle();
+        viewHolder.comicTitleTextView.setText(name);
         Picasso.with(getContext()).load(getItem(position).getImg()).into(viewHolder.comicImageView);
 
-
         convertView.setOnClickListener(new View.OnClickListener() {
-        viewHolder.favoriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("Item Clicked", title);
                 Intent intent = new Intent(getContext(), Description.class);
                 Bundle bundle = new Bundle();
                 bundle.putStringArrayList(INTENT_KEY_DETAIL, fullComic);
                 intent.putExtras(bundle);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
+            }
+        });
 
+        viewHolder.favoriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 Comic comic = comicDao.getByNum(getItem(position).getNum());
                 if (comic.isFavorised()) {
                     comicDao.updateFavorised(false, getItem(position).getNum());
@@ -105,10 +111,6 @@ public class ComicAdapter extends ArrayAdapter<Comic> {
 
 
         return convertView;
-    }
-
-    public void openDetailView(String position) {
-
     }
 
     public static class ViewHolder {

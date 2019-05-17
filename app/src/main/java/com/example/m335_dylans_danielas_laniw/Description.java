@@ -39,13 +39,9 @@ public class Description extends AppCompatActivity {
         TextView comicDate = findViewById(R.id.dateComic);
         comicDate.setText(date);
 
-        String transcript = listing.get(6);
-        TextView comicTranscript = findViewById(R.id.transcriptComic);
-        comicTranscript.setText(transcript);
-
-//        Boolean favorite = Boolean.parseBoolean(listing.get(7));
-
-
+        String alt = listing.get(6);
+        TextView comicAlt = findViewById(R.id.altComic);
+        comicAlt.setText(alt);
     }
 
 }

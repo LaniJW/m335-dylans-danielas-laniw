@@ -27,6 +27,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+/**
+ * Adapter class which loads the comics and its
+ * attributes into the list view
+ *
+ * @author Daniela Simões, Lani Wagner, Dylan Schmid
+ */
 public class ComicAdapter extends ArrayAdapter<Comic> {
 
     private ComicDao comicDao;
@@ -36,6 +42,11 @@ public class ComicAdapter extends ArrayAdapter<Comic> {
     private ViewHolder viewHolder = new ViewHolder();
     public static final String INTENT_KEY_DETAIL = "TEXT_TO_TEST_FUNCTIONALITY";
 
+    /**
+     *
+     * @param context
+     * @param comics list with comics
+     */
     public ComicAdapter(Context context, List<Comic> comics) {
         super(context, R.layout.comic_card);
         this.context = context;
@@ -47,12 +58,20 @@ public class ComicAdapter extends ArrayAdapter<Comic> {
         this.context = context;
     }
 
+    /**
+     *
+     * @param position current position in list
+     * @param convertView
+     * @param parent
+     * @return
+     */
     public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.comic_card, null);
             viewHolder.favoriteButton = convertView.findViewById(R.id.favorite_button);
             viewHolder.comicTitleTextView = convertView.findViewById(R.id.comicTitle);
             viewHolder.comicImageView = convertView.findViewById(R.id.imageView);
+            //checks if current commit is favorised and returns empty/full star
             if (getItem(position).isFavorised()) {
                 viewHolder.favoriteButton.setBackgroundResource(R.drawable.ic_star_black_24dp);
             } else {
@@ -63,6 +82,7 @@ public class ComicAdapter extends ArrayAdapter<Comic> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
+        //gets all elements for detail view of comic
         final String title = getItem(position).getTitle();
         final String img = getItem(position).getImg();
         final String id = Integer.toString(getItem(position).getNum());
@@ -81,10 +101,12 @@ public class ComicAdapter extends ArrayAdapter<Comic> {
         fullComic.add(alt);
         fullComic.add(isFavorite);
 
+        //sets the card title
         final String name = getItem(position).getTitle();
         viewHolder.comicTitleTextView.setText(name);
         Picasso.with(getContext()).load(getItem(position).getImg()).into(viewHolder.comicImageView);
 
+        //listener to check if a comic is clicked
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,6 +119,7 @@ public class ComicAdapter extends ArrayAdapter<Comic> {
             }
         });
 
+        //listener to check if a comic is favorised
         viewHolder.favoriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,6 +136,10 @@ public class ComicAdapter extends ArrayAdapter<Comic> {
         return convertView;
     }
 
+
+    /**
+     * elements for a cardview
+     */
     public static class ViewHolder {
         TextView comicTitleTextView;
         ImageView comicImageView;

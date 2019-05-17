@@ -49,6 +49,11 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
+        /**
+         *
+         * @param item
+         * @return
+         */
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             reloadButton = findViewById(R.id.reload_button);
@@ -68,6 +73,10 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,9 +89,11 @@ public class MainActivity extends AppCompatActivity {
         context = this.getApplicationContext();
         mComicDao = AppDatabase.getAppDb(getApplicationContext()).getComicDao();
 
+        //Reload butotn
         reloadButton = findViewById(R.id.reload_button);
         reloadButton.setOnClickListener(reload);
 
+        //searchbar
         final Toolbar searchBar = findViewById(R.id.search_bar);
         setSupportActionBar(searchBar);
         Button searchBarSearchButton = findViewById(R.id.search_bar_search_button);
@@ -98,11 +109,21 @@ public class MainActivity extends AppCompatActivity {
         Request request = createRequest();
 
         client.newCall(request).enqueue(new Callback() {
+            /**
+             *
+             * @param call
+             * @param e
+             */
             @Override
             public void onFailure(Call call, IOException e) {
                 logOkHttpFail(e);
             }
 
+            /**
+             *
+             * @param call
+             * @param response
+             */
             @Override
             public void onResponse(Call call, final Response response) {
                 final Comic comic = parseComicFromResponse(response);
@@ -114,11 +135,21 @@ public class MainActivity extends AppCompatActivity {
                         Request request = createRequest(i);
                         OkHttpClient client = new OkHttpClient();
                         client.newCall(request).enqueue(new Callback() {
+                            /**
+                             *
+                             * @param call
+                             * @param e
+                             */
                             @Override
                             public void onFailure(Call call, IOException e) {
                                 logOkHttpFail(e);
                             }
 
+                            /**
+                             *
+                             * @param call
+                             * @param response
+                             */
                             @Override
                             public void onResponse(Call call, final Response response) {
                                 final Comic comic = parseComicFromResponse(response);
@@ -131,6 +162,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Loads all cards for home view
+     */
     void loadHomeCards() {
         showSpinner();
         removeComics();
@@ -140,12 +174,22 @@ public class MainActivity extends AppCompatActivity {
         Request request = createRequest();
 
         client.newCall(request).enqueue(new Callback() {
+            /**
+             *
+             * @param call
+             * @param e
+             */
             @Override
             public void onFailure(Call call, IOException e) {
                 logOkHttpFail(e);
                 hideSpinner();
             }
 
+            /**
+             *
+             * @param call
+             * @param response
+             */
             @Override
             public void onResponse(Call call, final Response response) {
                 final Comic comic = parseComicFromResponse(response);
@@ -174,12 +218,23 @@ public class MainActivity extends AppCompatActivity {
 
                 OkHttpClient client = OkHttpClientFactory.getOkHttpClient();
                 client.newCall(request).enqueue(new Callback() {
+                    /**
+                     *
+                     * @param call
+                     * @param e
+                     */
                     @Override
                     public void onFailure(Call call, IOException e) {
                         logOkHttpFail(e);
                         hideSpinner();
                     }
 
+                    /**
+                     *
+                     * @param call
+                     * @param response
+                     * @throws IOException
+                     */
                     @Override
                     public void onResponse(Call call, final Response response) throws IOException {
                         final Comic comic = parseComicFromResponse(response);
@@ -208,6 +263,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     *
+     * @param highestId
+     * @return
+     */
     int getRandomNum(int highestId) {
         int rand = 0;
         while (rand == 0 || rand == 404)
@@ -215,18 +275,31 @@ public class MainActivity extends AppCompatActivity {
         return rand;
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     Request createRequest(int id) {
         return new Request.Builder()
                 .url("https://www.xkcd.com/" + id + "/info.0.json")
                 .build();
     }
 
+    /**
+     *
+     * @return
+     */
     Request createRequest() {
         return new Request.Builder()
                 .url("https://www.xkcd.com/info.0.json")
                 .build();
     }
 
+    /**
+     *
+     * @param e
+     */
     void logOkHttpFail(Exception e) {
         Log.e("OkHttp Fail", e.getMessage());
     }
@@ -239,6 +312,11 @@ public class MainActivity extends AppCompatActivity {
         mSpinner.setVisibility(View.INVISIBLE);
     }
 
+    /**
+     *
+     * @param r
+     * @return
+     */
     Comic parseComicFromResponse(Response r) {
         try {
             return new Gson().fromJson(r.body().string(), Comic.class);
@@ -268,6 +346,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private View.OnClickListener reload = new View.OnClickListener() {
+        /**
+         *
+         * @param button1
+         */
         @Override
         public void onClick(View button1) {
             loadHomeCards();
@@ -275,6 +357,10 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private View.OnClickListener performSearch = new View.OnClickListener() {
+        /**
+         *
+         * @param button1
+         */
         @Override
         public void onClick(View button1) {
             searchBarClass = new SearchBar();

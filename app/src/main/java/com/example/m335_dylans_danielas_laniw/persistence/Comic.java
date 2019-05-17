@@ -37,6 +37,18 @@ public class Comic {
     @ColumnInfo
     private boolean favorised;
 
+    /**
+     *
+     * @param num
+     * @param title
+     * @param safe_title
+     * @param img
+     * @param day
+     * @param month
+     * @param year
+     * @param transcript
+     * @param alt
+     */
     public Comic(int num, String title, String safe_title, String img, String day, String month, String year, String transcript, String alt) {
         this.num = num;
         this.title = title;

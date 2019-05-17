@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@color/cardBackgroundColor">
 
+    <!-- search bar -->
     <android.support.v7.widget.Toolbar
         android:id="@+id/search_bar"
         android:layout_width="match_parent"
@@ -23,6 +24,7 @@
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="2dp">
 
+            <!-- input text field -->
             <EditText
                 android:id="@+id/search_bar_text_field"
                 android:layout_width="0dp"
@@ -37,6 +39,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <!-- search button -->
             <Button
                 android:id="@+id/search_bar_search_button"
                 android:layout_width="50dp"

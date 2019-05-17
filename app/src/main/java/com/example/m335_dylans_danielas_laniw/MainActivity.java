@@ -183,8 +183,11 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call call, final Response response) throws IOException {
                         final Comic comic = parseComicFromResponse(response);
-                        if (mComicDao.getByNum(comic.getNum()) == null)
+                        if (mComicDao.getByNum(comic.getNum()) == null) {
                             mComicDao.insert(comic);
+                        } else {
+                            comic.setFavorised(mComicDao.getByNum(comic.getNum()).isFavorised());
+                        }
 
                         MainActivity.this.runOnUiThread(new Runnable() {
                             @Override

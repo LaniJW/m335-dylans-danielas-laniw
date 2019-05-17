@@ -63,6 +63,7 @@ public class ComicAdapter extends ArrayAdapter<Comic> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
+        //set comic attributes to String
         final String title = getItem(position).getTitle();
         final String img = getItem(position).getImg();
         final String id = Integer.toString(getItem(position).getNum());
@@ -72,6 +73,7 @@ public class ComicAdapter extends ArrayAdapter<Comic> {
         final String alt = getItem(position).getAlt();
         final String isFavorite = Boolean.toString(getItem(position).isFavorised());
         final ArrayList<String> fullComic = new ArrayList<>();
+        //Add Strings to comic ArrayList
         fullComic.add(title);
         fullComic.add(id);
         fullComic.add(img);
@@ -85,9 +87,12 @@ public class ComicAdapter extends ArrayAdapter<Comic> {
         viewHolder.comicTitleTextView.setText(name);
         Picasso.with(getContext()).load(getItem(position).getImg()).into(viewHolder.comicImageView);
 
+        //When Item is clicked in ListView
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //create Intent and Bundle
+                //Start Description class with intent
                 Intent intent = new Intent(getContext(), Description.class);
                 Bundle bundle = new Bundle();
                 bundle.putStringArrayList(INTENT_KEY_DETAIL, fullComic);

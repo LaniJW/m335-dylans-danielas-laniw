@@ -11,4 +11,5 @@
     <dimen name="listView_sidePadding">16dp</dimen>
     <dimen name="listView_topPadding">26dp</dimen>
     <dimen name="listView_itemSpacing">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

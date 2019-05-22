@@ -5,7 +5,7 @@ import okhttp3.OkHttpClient;
 /**
  * @author Lani Wagner
  */
-public class OkHttpClientFactory {
+class OkHttpClientFactory {
     private static OkHttpClient okHttpClient;
 
     // Return the same OkHttpClient object to avoid using more than one, which would be redundant.

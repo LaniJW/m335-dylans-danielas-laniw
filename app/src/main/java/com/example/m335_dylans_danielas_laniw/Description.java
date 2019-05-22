@@ -14,7 +14,7 @@ public class Description extends AppCompatActivity {
 
     /**
      * Display the data of the clicked comic in the detailview.
-     * @param savedInstanceState
+     * @param savedInstanceState - Bundle with data from main activity
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +26,9 @@ public class Description extends AppCompatActivity {
         ArrayList<String> listing = intentBundle.getStringArrayList(ComicAdapter.INTENT_KEY_DETAIL);
 
         //get Strings from ArrayList and set Views
-        String titel = listing.get(0);
-        TextView comicTitel = findViewById(R.id.comicTitle);
-        comicTitel.setText(titel);
+        String title = listing.get(0);
+        TextView comicTitle = findViewById(R.id.comicTitle);
+        comicTitle.setText(title);
 
         String id = listing.get(1);
         TextView comicId = findViewById(R.id.idComic);

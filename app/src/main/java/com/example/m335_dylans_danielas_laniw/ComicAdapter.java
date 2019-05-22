@@ -3,8 +3,6 @@ package com.example.m335_dylans_danielas_laniw;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,14 +16,8 @@ import com.example.m335_dylans_danielas_laniw.persistence.Comic;
 import com.example.m335_dylans_danielas_laniw.persistence.ComicDao;
 import com.squareup.picasso.Picasso;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 /**
  * Adapter class which loads the comics and its
@@ -33,19 +25,19 @@ import java.util.ListIterator;
  *
  * @author Daniela Simões, Lani Wagner, Dylan Schmid
  */
-public class ComicAdapter extends ArrayAdapter<Comic> {
+class ComicAdapter extends ArrayAdapter<Comic> {
 
-    private ComicDao comicDao;
-    private LayoutInflater layoutInflater;
+    final private ComicDao comicDao;
+    final private LayoutInflater layoutInflater;
     private ComicDao mComicDao;
-    private Context context;
+    final private Context context;
     private ViewHolder viewHolder = new ViewHolder();
     public static final String INTENT_KEY_DETAIL = "TEXT_TO_TEST_FUNCTIONALITY";
 
     /**
      *
-     * @param context
-     * @param comics list with comics
+     * @param context - Current GUI context
+     * @param comics  - list with comics
      */
     public ComicAdapter(Context context, List<Comic> comics) {
         super(context, R.layout.comic_card);
@@ -59,10 +51,10 @@ public class ComicAdapter extends ArrayAdapter<Comic> {
 
     /**
      *
-     * @param position current position in list
-     * @param convertView
-     * @param parent
-     * @return
+     * @param position - current position in list
+     * @param convertView - used to inflate card
+     * @param parent - parent where the card will be inserted
+     * @return - convertView
      */
     public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
@@ -143,7 +135,7 @@ public class ComicAdapter extends ArrayAdapter<Comic> {
     /**
      * elements for a cardview
      */
-    public static class ViewHolder {
+    static class ViewHolder {
         TextView comicTitleTextView;
         ImageView comicImageView;
         Button favoriteButton;

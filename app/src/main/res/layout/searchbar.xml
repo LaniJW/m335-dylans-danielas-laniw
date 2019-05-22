@@ -34,6 +34,7 @@
                 android:hint="@string/searchBar_hint_text"
                 android:inputType="textPersonName"
                 android:shadowColor="@color/colorSecondaryDark"
+                android:autofillHints="@string/search_bar_placeholder"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/search_bar_search_button"
                 app:layout_constraintStart_toStartOf="parent"

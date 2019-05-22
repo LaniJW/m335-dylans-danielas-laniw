@@ -39,15 +39,15 @@ public class Comic {
 
     /**
      *
-     * @param num
-     * @param title
-     * @param safe_title
-     * @param img
-     * @param day
-     * @param month
-     * @param year
-     * @param transcript
-     * @param alt
+     * @param num - comic id
+     * @param title - comic title
+     * @param safe_title - comic safe title
+     * @param img - comic img url
+     * @param day - comic release day
+     * @param month - comic release month
+     * @param year - comic release year
+     * @param transcript - comic transcript
+     * @param alt - comic alt
      */
     public Comic(int num, String title, String safe_title, String img, String day, String month, String year, String transcript, String alt) {
         this.num = num;

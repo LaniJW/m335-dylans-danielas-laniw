@@ -1,5 +1,6 @@
 package com.example.m335_dylans_danielas_laniw;
 
+import android.annotation.SuppressLint;
 import android.support.v7.app.AppCompatActivity;
 
 import android.view.View;
@@ -16,14 +17,15 @@ import java.util.List;
  *
  * @author Daniela Simões
  */
+@SuppressLint("Registered")
 public class SearchBar extends AppCompatActivity {
 
     /**
      * Performs the search with the given search value.
-     * @param list
-     * @param searchTextField
-     * @param invalidText
-     * @return
+     * @param list - list of comics
+     * @param searchTextField - search field
+     * @param invalidText - invalid text textview incase there's an issue with the search
+     * @return - found comics
      */
     public List<Comic> performSearch(List<Comic> list, EditText searchTextField, TextView invalidText) {
         invalidText.setVisibility(View.INVISIBLE);

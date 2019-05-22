@@ -45,13 +45,13 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Handles the switching between the home and favorites page.
      */
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+    final private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         /**
          *
-         * @param item
-         * @return
+         * @param item - item of bottom nav
+         * @return -
          */
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      *
-     * @param savedInstanceState
+     * @param savedInstanceState -
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Loads all comics from the XKCD API with the use of OkHttp and persists the data in the database for further queries.
      */
-    void loadAllComics() {
+    private void loadAllComics() {
         OkHttpClient client = OkHttpClientFactory.getOkHttpClient();
         Request request = createRequest();
 
@@ -120,8 +120,8 @@ public class MainActivity extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             /**
              *
-             * @param call
-             * @param e
+             * @param call -
+             * @param e - The exception thrown
              */
             @Override
             public void onFailure(Call call, IOException e) {
@@ -130,8 +130,8 @@ public class MainActivity extends AppCompatActivity {
 
             /**
              *
-             * @param call
-             * @param response
+             * @param call -
+             * @param response - Response from the API request
              */
             @Override
             public void onResponse(Call call, final Response response) {
@@ -150,8 +150,8 @@ public class MainActivity extends AppCompatActivity {
                         client.newCall(request).enqueue(new Callback() {
                             /**
                              *
-                             * @param call
-                             * @param e
+                             * @param call -
+                             * @param e - The exception thrown
                              */
                             @Override
                             public void onFailure(Call call, IOException e) {
@@ -160,8 +160,8 @@ public class MainActivity extends AppCompatActivity {
 
                             /**
                              *
-                             * @param call
-                             * @param response
+                             * @param call -
+                             * @param response - The response from the API call
                              */
                             @Override
                             public void onResponse(Call call, final Response response) {
@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
      * Displays the newest and random comic in the home tab, which are pulled from the API.
      * If they're not already saved in the API they're persisted to avoid crashing the app when they're favorised or the detailview is opened.
      */
-    void loadHomeCards() {
+    private void loadHomeCards() {
         showSpinner();
         removeComics();
         comicList = new ArrayList();
@@ -192,8 +192,8 @@ public class MainActivity extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             /**
              *
-             * @param call
-             * @param e
+             * @param call -
+             * @param e - The exception thrown
              */
             @Override
             public void onFailure(Call call, IOException e) {
@@ -203,8 +203,8 @@ public class MainActivity extends AppCompatActivity {
 
             /**
              *
-             * @param call
-             * @param response
+             * @param call -
+             * @param response - The response form the API call
              */
             @Override
             public void onResponse(Call call, final Response response) {
@@ -241,8 +241,8 @@ public class MainActivity extends AppCompatActivity {
                 client.newCall(request).enqueue(new Callback() {
                     /**
                      *
-                     * @param call
-                     * @param e
+                     * @param call -
+                     * @param e - The exception thrown
                      */
                     @Override
                     public void onFailure(Call call, IOException e) {
@@ -252,12 +252,12 @@ public class MainActivity extends AppCompatActivity {
 
                     /**
                      *
-                     * @param call
-                     * @param response
-                     * @throws IOException
+                     * @param call -
+                     * @param response - The response from the API call
+                     * @throws IOException -
                      */
                     @Override
-                    public void onResponse(Call call, final Response response) throws IOException {
+                    public void onResponse(Call call, final Response response) {
                         final Comic comic = parseComicFromResponse(response);
                         if (mComicDao.getByNum(comic.getNum()) == null) {
                             // Insert random comic into database if it's not there yet.
@@ -292,8 +292,8 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Returns a random number between 1 and the highestId parameter.
      * Additionally the random function doesn't return a random value that is equal to 404 since the call of the comic with the id 404 returns, well a 404 Not Found error.
-     * @param highestId
-     * @return
+     * @param highestId - highest comic id
+     * @return - random number
      */
     int getRandomNum(int highestId) {
         int rand = 0;
@@ -304,10 +304,10 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Returns the request with the id parameter.
-     * @param id
-     * @return
+     * @param id - id for the request
+     * @return - the request with the given id
      */
-    Request createRequest(int id) {
+    private Request createRequest(int id) {
         return new Request.Builder()
                 .url("https://www.xkcd.com/" + id + "/info.0.json")
                 .build();
@@ -315,9 +315,9 @@ public class MainActivity extends AppCompatActivity {
 
     /**Returns the request for the newest comic.
      *
-     * @return
+     * @return the request for the highest id
      */
-    Request createRequest() {
+    private Request createRequest() {
         return new Request.Builder()
                 .url("https://www.xkcd.com/info.0.json")
                 .build();
@@ -325,32 +325,32 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Logs a fail while requesting something over the API using OkHttp
-     * @param e
+     * @param e - the exception that is to be logged
      */
-    void logOkHttpFail(Exception e) {
+    private void logOkHttpFail(Exception e) {
         Log.e("OkHttp Fail", e.getMessage());
     }
 
     /**
      * Makes the Spinner visible.
      */
-    void showSpinner() {
+    private void showSpinner() {
         mSpinner.setVisibility(View.VISIBLE);
     }
 
     /**
      * Makes the spinner disappear.
      */
-    void hideSpinner() {
+    private void hideSpinner() {
         mSpinner.setVisibility(View.INVISIBLE);
     }
 
     /**
      * Parses the json string that got returned from the api call into a comic object and returns that.
-     * @param r
-     * @return
+     * @param r - The response from the API call
+     * @return - The comic object parsed from the result with GSON
      */
-    Comic parseComicFromResponse(Response r) {
+    private Comic parseComicFromResponse(Response r) {
         try {
             return new Gson().fromJson(r.body().string(), Comic.class);
         } catch (IOException iOe) {
@@ -362,21 +362,21 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Removes all of the comics from the list that is used when displaying them.
      */
-    void removeComics() {
+    private void removeComics() {
         comicList = null;
     }
 
     /**
      * Displays the comics on the page with the use of the parameter comicList.
      */
-    void displayComics() {
+    private void displayComics() {
         mMainListView.setAdapter(new ComicAdapter(context, comicList));
     }
 
     /**
      * Displays all of the comics which are favorised from the database.
      */
-    void loadFavCards() {
+    private void loadFavCards() {
         // Display loading icon
         mSpinner.setVisibility(View.VISIBLE);
         // Get all comics
@@ -390,10 +390,10 @@ public class MainActivity extends AppCompatActivity {
     /**
      * OnClickListener for the home cards reload.
      */
-    private View.OnClickListener reload = new View.OnClickListener() {
+    final private View.OnClickListener reload = new View.OnClickListener() {
         /**
          *
-         * @param button1
+         * @param button1 - button clicked
          */
         @Override
         public void onClick(View button1) {
@@ -404,10 +404,10 @@ public class MainActivity extends AppCompatActivity {
     /**
      * OnClickListener for the search icon to launch a search.
      */
-    private View.OnClickListener performSearch = new View.OnClickListener() {
+    final private View.OnClickListener performSearch = new View.OnClickListener() {
         /**
          *
-         * @param button1
+         * @param button1 - button clicked
          */
         @Override
         public void onClick(View button1) {

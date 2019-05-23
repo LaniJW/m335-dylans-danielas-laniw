@@ -96,6 +96,8 @@ public class MainActivity extends AppCompatActivity {
         reloadButton = findViewById(R.id.reload_button);
         reloadButton.setOnClickListener(reload);
 
+        Log.e("test", "reached this point");
+
         //searchbar
         final Toolbar searchBar = findViewById(R.id.search_bar);
         setSupportActionBar(searchBar);

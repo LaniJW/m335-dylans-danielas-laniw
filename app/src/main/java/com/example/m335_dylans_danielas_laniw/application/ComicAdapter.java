@@ -25,7 +25,7 @@ import java.util.List;
  *
  * @author Daniela Simões, Lani Wagner, Dylan Schmid
  */
-class ComicAdapter extends ArrayAdapter<Comic> {
+public class ComicAdapter extends ArrayAdapter<Comic> {
 
     final private ComicDao comicDao;
     final private LayoutInflater layoutInflater;
